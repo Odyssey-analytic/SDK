@@ -1,41 +1,45 @@
-# Ignore Rider's specific files and directories
-odysseyAnalytics/.idea/
+# Ignore Rider project files
+**/.idea/
 
-# Ignore build directories
-odysseyAnalytics/bin/
-odysseyAnalytics/obj/
-
-# Ignore user-specific files
-odysseyAnalytics/*.user
-odysseyAnalytics/*.userosscache
-odysseyAnalytics/*.suo
-odysseyAnalytics/*.userprefs
-
-# Ignore Windows Installer files
-odysseyAnalytics/*.cab
-odysseyAnalytics/*.msi
-odysseyAnalytics/*.msm
-odysseyAnalytics/*.msp
-
-# Ignore package directory
-odysseyAnalytics/packages/
-
-# Ignore logs
-odysseyAnalytics/*.log
-
-# Ignore compiled assemblies and .dll files
-odysseyAnalytics/*.dll
-odysseyAnalytics/*.exe
-odysseyAnalytics/*.pdb
-
-# Ignore Visual Studio files
-odysseyAnalytics/.vs/
-
-# Ignore IntelliJ IDEA files
-odysseyAnalytics/*.iml
-
-# Ignore JetBrains Rider's cache files
-odysseyAnalytics/.idea/
+# Ignore build output directories
+**/bin/
+**/obj/
 
 # Ignore NuGet package files
-odysseyAnalytics/*.nupkg
+**/*.nupkg
+
+# Ignore user-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Ignore compiled assemblies
+**/*.dll
+**/*.exe
+**/*.pdb
+
+# Ignore Visual Studio files
+.vs/
+
+# Ignore logs
+*.log
+
+# Ignore temporary files and caches
+*.tmp
+*.bak
+
+# Ignore IntelliJ IDEA files
+*.iml
+
+# Ignore JetBrains Rider caches
+.idea/
+
+# Ignore test results
+/testResults/
+
+# Ignore .NET Core and .NET 5/6 runtime artifacts
+artifacts/
+
+# Ignore local application configuration files (e.g. launchSettings.json)
+**/Properties/launchSettings.json
