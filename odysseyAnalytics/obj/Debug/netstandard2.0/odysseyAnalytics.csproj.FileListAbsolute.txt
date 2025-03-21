@@ -1,0 +1,11 @@
+E:\codes\Software\SDK\odysseyAnalytics\bin\Debug\netstandard2.0\odysseyAnalytics.deps.json
+E:\codes\Software\SDK\odysseyAnalytics\bin\Debug\netstandard2.0\odysseyAnalytics.dll
+E:\codes\Software\SDK\odysseyAnalytics\bin\Debug\netstandard2.0\odysseyAnalytics.pdb
+E:\codes\Software\SDK\odysseyAnalytics\obj\Debug\netstandard2.0\odysseyAnalytics.csproj.AssemblyReference.cache
+E:\codes\Software\SDK\odysseyAnalytics\obj\Debug\netstandard2.0\odysseyAnalytics.GeneratedMSBuildEditorConfig.editorconfig
+E:\codes\Software\SDK\odysseyAnalytics\obj\Debug\netstandard2.0\odysseyAnalytics.AssemblyInfoInputs.cache
+E:\codes\Software\SDK\odysseyAnalytics\obj\Debug\netstandard2.0\odysseyAnalytics.AssemblyInfo.cs
+E:\codes\Software\SDK\odysseyAnalytics\obj\Debug\netstandard2.0\odysseyAnalytics.csproj.CoreCompileInputs.cache
+E:\codes\Software\SDK\odysseyAnalytics\obj\Debug\netstandard2.0\odysseyAnalytics.sourcelink.json
+E:\codes\Software\SDK\odysseyAnalytics\obj\Debug\netstandard2.0\odysseyAnalytics.dll
+E:\codes\Software\SDK\odysseyAnalytics\obj\Debug\netstandard2.0\odysseyAnalytics.pdb

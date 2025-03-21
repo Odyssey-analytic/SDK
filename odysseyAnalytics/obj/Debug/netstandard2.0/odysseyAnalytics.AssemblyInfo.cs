@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("odysseyAnalytics")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e52fec1ca9fd4ed2ad609aafff4305c64ba246ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20b2f3cc9632734a40a0f9693621d614210f019f")]
 [assembly: System.Reflection.AssemblyProductAttribute("odysseyAnalytics")]
 [assembly: System.Reflection.AssemblyTitleAttribute("odysseyAnalytics")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

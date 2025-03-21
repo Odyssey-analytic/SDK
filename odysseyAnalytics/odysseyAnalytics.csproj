@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="KPIs\" />
+    <Folder Include="Events\" />
+    <Folder Include="Storage\" />
     <Folder Include="Types\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 
 </Project>
