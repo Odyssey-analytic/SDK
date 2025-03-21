@@ -6,6 +6,7 @@
 CHECKLIST.md
 # User-specific files
 *.suo
+.idea
 *.user
 *.userosscache
 *.sln.docstates
