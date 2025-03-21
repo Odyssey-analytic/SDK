@@ -1,41 +1,41 @@
 # Ignore Rider's specific files and directories
-.idea/
+odysseyAnalytics/.idea/
 
 # Ignore build directories
-/bin/
-/obj/
+odysseyAnalytics/bin/
+odysseyAnalytics/obj/
 
 # Ignore user-specific files
-*.user
-*.userosscache
-*.suo
-*.userprefs
+odysseyAnalytics/*.user
+odysseyAnalytics/*.userosscache
+odysseyAnalytics/*.suo
+odysseyAnalytics/*.userprefs
 
 # Ignore Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+odysseyAnalytics/*.cab
+odysseyAnalytics/*.msi
+odysseyAnalytics/*.msm
+odysseyAnalytics/*.msp
 
 # Ignore package directory
-/packages/
+odysseyAnalytics/packages/
 
 # Ignore logs
-*.log
+odysseyAnalytics/*.log
 
 # Ignore compiled assemblies and .dll files
-*.dll
-*.exe
-*.pdb
+odysseyAnalytics/*.dll
+odysseyAnalytics/*.exe
+odysseyAnalytics/*.pdb
 
 # Ignore Visual Studio files
-.vs/
+odysseyAnalytics/.vs/
 
 # Ignore IntelliJ IDEA files
-*.iml
+odysseyAnalytics/*.iml
 
 # Ignore JetBrains Rider's cache files
-.idea/
+odysseyAnalytics/.idea/
 
 # Ignore NuGet package files
-*.nupkg
+odysseyAnalytics/*.nupkg
