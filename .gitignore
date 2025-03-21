@@ -1,12 +1,15 @@
 # Ignore Rider project files
-**/.idea/
+.idea/
 
-# Ignore build output directories
-**/bin/
-**/obj/
+# Ignore build output
+/bin/
+/obj/
 
-# Ignore NuGet package files
-**/*.nupkg
+# Ignore NuGet packages
+/packages/
+
+# Ignore package files
+*.nupkg
 
 # Ignore user-specific files
 *.user
@@ -15,11 +18,11 @@
 *.userprefs
 
 # Ignore compiled assemblies
-**/*.dll
-**/*.exe
-**/*.pdb
+*.dll
+*.exe
+*.pdb
 
-# Ignore Visual Studio files
+# Ignore Visual Studio files (if you use it alongside Rider)
 .vs/
 
 # Ignore logs
@@ -42,4 +45,4 @@
 artifacts/
 
 # Ignore local application configuration files (e.g. launchSettings.json)
-**/Properties/launchSettings.json
+Properties/launchSettings.json
