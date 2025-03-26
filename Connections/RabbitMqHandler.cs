@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using RabbitMQ.Client;
 
 namespace odysseyAnalytics.Connections
@@ -9,7 +10,7 @@ namespace odysseyAnalytics.Connections
         private IConnection _connection;
         private IChannel _channel; // ✅ Ensure this is correctly declared
 
-        public async void Connect(string host, string username, string password,string vHost="/", int port = 5672)
+        public async Task Connect(string host, string username, string password,string vHost="/", int port = 5672)
         {
             var factory = new ConnectionFactory()
             {
@@ -28,7 +29,7 @@ namespace odysseyAnalytics.Connections
             Console.WriteLine("Connected to RabbitMQ");
         }
 
-        public async void PublishMessage(string queueName, string message)
+        public async Task PublishMessage(string queueName, string message)
         {
             await _channel.QueueDeclareAsync(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
 
@@ -37,7 +38,7 @@ namespace odysseyAnalytics.Connections
             Console.WriteLine($"Sent: {message}");
         }
 
-        public async void Close()
+        public async Task Close()
         {
             await _channel?.CloseAsync();
             await _connection?.CloseAsync();
