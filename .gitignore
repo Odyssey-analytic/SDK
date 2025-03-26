@@ -35,9 +35,6 @@
 # Ignore IntelliJ IDEA files
 *.iml
 
-# Ignore JetBrains Rider caches
-.idea/
-
 # Ignore test results
 /testResults/
 

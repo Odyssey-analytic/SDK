@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-
 namespace odysseyAnalytics.Connections
 {
     public class ConnectionHandler : IDisposable
@@ -10,11 +9,13 @@ namespace odysseyAnalytics.Connections
         private readonly string _baseUrl;
         private HttpClient _httpClient;
         
+        
         public ConnectionHandler(string apiKey, string baseUrl)
         {
             _apiKey = apiKey;
             _baseUrl = baseUrl;
             InitializeConnection();
+
         }
         private void InitializeConnection()
         {
