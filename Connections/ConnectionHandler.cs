@@ -20,7 +20,7 @@ namespace odysseyAnalytics.Connections
         private void InitializeConnection()
         {
             _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"{_apiKey}");
         }
         public async Task<HttpResponseMessage> SendRequestAsync(string endpoint, HttpMethod method, HttpContent content = null)
         {

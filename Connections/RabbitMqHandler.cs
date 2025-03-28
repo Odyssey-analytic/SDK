@@ -31,8 +31,6 @@ namespace odysseyAnalytics.Connections
 
         public async Task PublishMessage(string queueName, string message)
         {
-            await _channel.QueueDeclareAsync(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-
             var body = Encoding.UTF8.GetBytes(message);
             await _channel.BasicPublishAsync(exchange:"",routingKey:queueName,body: body);
             Console.WriteLine($"Sent: {message}");
