@@ -9,6 +9,7 @@
     <Folder Include="Storage\" />
     <Folder Include="Types\" />
     <Folder Include="Utils\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
