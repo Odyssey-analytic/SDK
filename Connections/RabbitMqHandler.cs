@@ -2,6 +2,8 @@
 using System.Text;
 using System.Threading.Tasks;
 using RabbitMQ.Client;
+using System.Net.Http;
+
 
 namespace odysseyAnalytics.Connections
 {
@@ -35,6 +37,12 @@ namespace odysseyAnalytics.Connections
             await _channel.BasicPublishAsync(exchange:"",routingKey:queueName,body: body);
             Console.WriteLine($"Sent: {message}");
         }
+        // public async Task PublishMessagee(string queueName, string message)
+        // {
+        //     HttpClient client = new HttpClient();
+        //     HttpResponseMessage credentials = HttpClient.SendRequestAsync("api/token/", HttpMethod.Get);
+        //
+        // }
 
         public async Task Close()
         {

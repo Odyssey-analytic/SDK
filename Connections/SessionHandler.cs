@@ -1,35 +1,42 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
-using odysseyAnalytics.Connections.ConnectionHandler;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace odysseyAnalytics.Connections
 {
     public class SessionHandler
     {
-        public string? SessionId { get; set; }
-        public int? CID { get; set; }
-        public ConnectionHandler? Connection { get; set; }
+        public int SessionId { get; set; }
+        public int CID { get; set; }
+        public ConnectionHandler Connection { get; set; }
         
-        public RabbitMqHandler? RabbitMQ { get; set; }  
+        private string username { get; set; }
+        private string password { get; set; }
+        public RabbitMqHandler RabbitMQ { get; set; }  
         
-        public Dictionary<string,string>Queues = new Dictionary<string, string>();
+        private Dictionary<string,string>Queues = new Dictionary<string, string>();
 
-        public void SessionStart(string token)
+        public SessionHandler(ConnectionHandler connection, RabbitMqHandler rabbitMQ)
         {
-            this.Connection = new ConnectionHandler(token,"http://127.0.0.1:8000/");
+            Connection = connection;
+            RabbitMQ = rabbitMQ;
+            SessionId = new Random().Next(1,10000);
+        }
+
+        public async Task GetCreds()
+        {
             HttpResponseMessage credentials = await Connection.SendRequestAsync("api/token/", HttpMethod.Get);
-            string? host = "localhost";
-            string? username = "";
-            string? password = "";
-            string? payload = "";
             if (credentials.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                JObject data =JObject.Parse(credentials.Content.ReadAsStringAsync().Result);
-                this.CID = data["cid"];
+                JObject data = JObject.Parse(credentials.Content.ReadAsStringAsync().Result);
+                Console.WriteLine(data);
+                CID = int.Parse(data["cid"].ToString());
                 username = data["rb_username"].ToString();
                 password = data["rb_password"].ToString();
                 JArray queues = (JArray)data["queues"];
@@ -37,46 +44,56 @@ namespace odysseyAnalytics.Connections
                 {
                     this.Queues.Add(queues[i].Value<string>("name"), queues[i].Value<string>("fullname"));
                 }
-                string timestamp = DateTime.UtcNow.ToString("o");
-                string nonce = Guid.NewGuid().ToString();
-                string raw = $"{CID}-{timestamp}-{nonce}";
-                using (var sha = SHA256.Create())
+
+                foreach (var v in Queues)
                 {
-                    byte[] bytes = Encoding.UTF8.GetBytes(raw);
-                    byte[] hash = sha.ComputeHash(bytes);
-                    this.SessionId = BitConverter.ToString(hash).Replace("-", "").ToLower();
+                    Console.WriteLine(v.Value);
+                    Console.WriteLine(v.Key);
                 }
-                System.Console.WriteLine("Your session has been created successfully.Here is the Session ID:");
-                System.Console.WriteLine(this.SessionId);
-                this.RabbitMQ = new RabbitMqHandler();
-                await rabbitMqHandler.Connect('localhost', username, password , "analytic");
-                System.Console.WriteLine("Rabbit MQ connection established.");
-                
             }
             else
             {
                 System.Console.WriteLine("An Error Has Occurred.");
             }
+
+            try
+            {
+                
+                await RabbitMQ.Connect("odysseyanalytics.ir", username, password, "analytic");
+                System.Console.WriteLine("Rabbit MQ connection established.");
+            }
+            catch(Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
         }
 
-        public void SendSessionStart()
+        public async void SessionStart()
         {
-            var session_payload =
-            new {
-                time: DateTime.UtcNow.ToString("o"),
-                client: this.CID,
-                session: this.SessionId,
-                platform: "android"
-            };
+            var session_payload = new 
+            {
+                    time= DateTime.UtcNow.ToString("o"),
+                    client= this.CID,
+                    session= this.SessionId,
+                    platform= "android"
+                };
             var message = JsonConvert.SerializeObject(session_payload);
             await RabbitMQ.PublishMessage(this.Queues["start_session"], message);
-
         }
-
-        public void SessionEnd()
+        
+        public async void SessionEnd()
         {
-            this.Connection.CloseConnection();
-            this.RabbitMQ.Close()
+            var session_payload = new 
+            {
+                time= DateTime.UtcNow.ToString("o"),
+                client= this.CID,
+                session= this.SessionId,
+            };
+            var message = JsonConvert.SerializeObject(session_payload);
+            await RabbitMQ.PublishMessage(this.Queues["end_session"], message);
+            this.Connection.Dispose();
+            await this.RabbitMQ.Close();
+            
         }
     }
 }
