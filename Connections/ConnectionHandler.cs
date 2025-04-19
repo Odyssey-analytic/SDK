@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
 using odysseyAnalytics.Exceptions;
+using odysseyAnalytics.Logging;
 
 namespace odysseyAnalytics.Connections
 {
@@ -11,7 +12,7 @@ namespace odysseyAnalytics.Connections
         private readonly string _apiKey;
         private readonly string _baseUrl;
         private HttpClient _httpClient;
-
+        private static DefaultLogger _logger = new DefaultLogger(); 
 
         public ConnectionHandler(string apiKey, string baseUrl)
         {
@@ -49,11 +50,13 @@ namespace odysseyAnalytics.Connections
                 {
                     testClient.Timeout = TimeSpan.FromSeconds(5);
                     var response = await testClient.GetAsync("https://www.google.com/generate_204");
+                    _logger.Log("Internet connection is up and running.");
                     return response.StatusCode == System.Net.HttpStatusCode.NoContent;
                 }
             }
             catch
             {
+                _logger.Error("Internet connection is not established.");
                 throw new NoInternetConnectionException("Cannot reach the internet.");
             }
         }

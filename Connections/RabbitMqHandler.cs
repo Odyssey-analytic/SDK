@@ -14,8 +14,13 @@ namespace odysseyAnalytics.Connections
     {
         private IConnection _connection;
         private IChannel _channel;
-        private bool _isConnected = false;
-        private DefaultLogger _logger;
+
+        private bool _isConnected =>
+            _connection != null && _connection.IsOpen &&
+            _channel != null && _channel.IsOpen;
+
+        private DefaultLogger _logger = new DefaultLogger();
+
         public async Task Connect(string host, string username, string password, string vHost = "/", int port = 5672,
             bool checkInternetConnectionFirst = false)
         {
@@ -38,24 +43,23 @@ namespace odysseyAnalytics.Connections
                 };
                 _connection = await factory.CreateConnectionAsync();
                 _channel = await _connection.CreateChannelAsync();
-                _isConnected = true;
                 _logger.Log("Connected to RabbitMQ");
             }
             catch (NoInternetConnectionException ex)
             {
-                _logger.Error("❌ No internet: " , ex);
+                _logger.Error("❌ No internet: ", ex);
             }
             catch (TaskCanceledException ex)
             {
-                _logger.Error("❌ Connection timed out: " , ex);
+                _logger.Error("❌ Connection timed out: ", ex);
             }
             catch (HttpRequestException ex)
             {
-                _logger.Error("❌ HTTP error during internet check: " , ex);
+                _logger.Error("❌ HTTP error during internet check: ", ex);
             }
             catch (Exception ex)
             {
-                _logger.Error("❌ Unexpected error: ",ex);
+                _logger.Error("❌ Unexpected error: ", ex);
             }
         }
 
@@ -72,6 +76,11 @@ namespace odysseyAnalytics.Connections
             await _connection?.CloseAsync();
             _channel?.DisposeAsync();
             _connection?.DisposeAsync();
+        }
+
+        public bool IsConnectedToRabbitMq()
+        {
+            return _isConnected;
         }
     }
 }
