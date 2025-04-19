@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
-using OdysseyAnalytics.Exceptions;
+using odysseyAnalytics.Exceptions;
 
 namespace odysseyAnalytics.Connections
 {

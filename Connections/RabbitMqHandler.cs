@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using RabbitMQ.Client;
 using System.Net.Http;
 using MessagePack;
-using OdysseyAnalytics.Exceptions;
-
+using odysseyAnalytics.Exceptions;
+using odysseyAnalytics.Logging;
+using odysseyAnalytics.Types;
 
 namespace odysseyAnalytics.Connections
 {
@@ -14,7 +15,7 @@ namespace odysseyAnalytics.Connections
         private IConnection _connection;
         private IChannel _channel;
         private bool _isConnected = false;
-
+        private DefaultLogger _logger;
         public async Task Connect(string host, string username, string password, string vHost = "/", int port = 5672,
             bool checkInternetConnectionFirst = false)
         {
@@ -38,23 +39,23 @@ namespace odysseyAnalytics.Connections
                 _connection = await factory.CreateConnectionAsync();
                 _channel = await _connection.CreateChannelAsync();
                 _isConnected = true;
-                Console.WriteLine("Connected to RabbitMQ");
+                _logger.Log("Connected to RabbitMQ");
             }
             catch (NoInternetConnectionException ex)
             {
-                Console.WriteLine("❌ No internet: " + ex.Message);
+                _logger.Error("❌ No internet: " , ex);
             }
             catch (TaskCanceledException ex)
             {
-                Console.WriteLine("❌ Connection timed out: " + ex.Message);
+                _logger.Error("❌ Connection timed out: " , ex);
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine("❌ HTTP error during internet check: " + ex.Message);
+                _logger.Error("❌ HTTP error during internet check: " , ex);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("❌ Unexpected error: " + ex.Message);
+                _logger.Error("❌ Unexpected error: ",ex);
             }
         }
 
@@ -62,7 +63,7 @@ namespace odysseyAnalytics.Connections
         {
             var body = Encoding.UTF8.GetBytes(message);
             await _channel.BasicPublishAsync(exchange: "", routingKey: queueName, body: body);
-            Console.WriteLine($"Sent: {message}");
+            _logger.Log($"Sent: {message}");
         }
 
         public async Task Close()
