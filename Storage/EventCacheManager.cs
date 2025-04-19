@@ -29,26 +29,36 @@ namespace odysseyAnalytics.Storage
             return Path.Combine(AppContext.BaseDirectory, "analytics.db");
 #endif
         }
-        public void SaveEvent(string name,string clientId,string sessionId, Dictionary<string, object> eventDatas)
+
+        public void SaveEvent(string name, string queueName, string clientId, string sessionId,
+            Dictionary<string, object> eventDatas)
         {
+            int priority = name == "start_session" ? 0 : 5; // Example: start_session is critical
+
             var evt = new AnalyticsEvent
             {
                 EventName = name,
                 SessionId = sessionId,
+                QueueName = queueName,
                 EventTime = DateTime.UtcNow,
                 Data = eventDatas,
-                ClientId = clientId
+                ClientId = clientId,
+                Priority = priority
             };
+
             _db.Insert(evt);
         }
+
         public List<AnalyticsEvent> LoadAllEvents()
         {
             return _db.Table<AnalyticsEvent>().ToList();
         }
+
         public void DeleteEvent(int id)
         {
             _db.Delete<AnalyticsEvent>(id);
         }
+
         public void Clear()
         {
             _db.DeleteAll<AnalyticsEvent>();

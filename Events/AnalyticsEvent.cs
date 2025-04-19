@@ -13,10 +13,14 @@ namespace odysseyAnalytics.Events
     {
         [PrimaryKey, AutoIncrement] public int Id { get; set; }
         public string EventName { get; set; }
+        
+        public string QueueName { get; set; }
         public DateTime EventTime { get; set; }
         public string SessionId { get; set; }
         public string ClientId { get; set; }
         private string DataJson { get; set; }
+        
+        public int Priority { get; set; } 
 
         [Ignore] // Prevents this from being mapped to SQLite
         public Dictionary<string, object> Data
