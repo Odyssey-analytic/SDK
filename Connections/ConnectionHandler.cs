@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.NetworkInformation;
+using OdysseyAnalytics.Exceptions;
+
 namespace odysseyAnalytics.Connections
 {
     public class ConnectionHandler : IDisposable
@@ -8,21 +11,23 @@ namespace odysseyAnalytics.Connections
         private readonly string _apiKey;
         private readonly string _baseUrl;
         private HttpClient _httpClient;
-        
-        
+
+
         public ConnectionHandler(string apiKey, string baseUrl)
         {
             _apiKey = apiKey;
             _baseUrl = baseUrl;
             InitializeConnection();
-
         }
+
         private void InitializeConnection()
         {
             _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"{_apiKey}");
         }
-        public async Task<HttpResponseMessage> SendRequestAsync(string endpoint, HttpMethod method, HttpContent content = null)
+
+        public async Task<HttpResponseMessage> SendRequestAsync(string endpoint, HttpMethod method,
+            HttpContent content = null)
         {
             var request = new HttpRequestMessage(method, endpoint) { Content = content };
             try
@@ -35,6 +40,25 @@ namespace odysseyAnalytics.Connections
                 return null;
             }
         }
+
+        public static async Task<bool> IsConnectedToInternet()
+        {
+            try
+            {
+                using (var testClient = new HttpClient())
+                {
+                    testClient.Timeout = TimeSpan.FromSeconds(5);
+                    var response = await testClient.GetAsync("https://www.google.com/generate_204");
+                    return response.StatusCode == System.Net.HttpStatusCode.NoContent;
+                }
+            }
+            catch
+            {
+                throw new NoInternetConnectionException("Cannot reach the internet.");
+            }
+        }
+
+
         private void CloseConnection()
         {
             _httpClient?.Dispose();
