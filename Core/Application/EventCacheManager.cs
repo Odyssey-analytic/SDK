@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using odysseyAnalytics.Core.Ports;
 using SQLite;
 using odysseyAnalytics.Events;
 
@@ -14,7 +15,7 @@ namespace odysseyAnalytics.Storage
     {
         private readonly SQLiteConnection _db;
 
-        public EventCacheManager()
+        public EventCacheManager(IDatabasePort databasePort)
         {
             var path = GetDatabasePath();
             _db = new SQLiteConnection(path);

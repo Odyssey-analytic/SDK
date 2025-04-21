@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using odysseyAnalytics.Core.Ports;
 using RabbitMQ.Client;
 using odysseyAnalytics.Logging;
 using odysseyAnalytics.Storage;
@@ -9,7 +10,7 @@ using odysseyAnalytics.Storage;
 
 namespace odysseyAnalytics.Connections
 {
-    public class RabbitMqHandler
+    public class RabbitMqHandler : IMessagePublisherPort
     {
         private IConnection _connection;
         private IChannel _channel;
@@ -148,5 +149,9 @@ namespace odysseyAnalytics.Connections
         }
 
         public bool IsConnectedToRabbitMq() => IsConnected;
+        public Task<T> PublishMessage<T>(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

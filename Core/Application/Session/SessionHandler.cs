@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using odysseyAnalytics.Core.Ports;
 
 
 namespace odysseyAnalytics.Connections
@@ -14,24 +15,24 @@ namespace odysseyAnalytics.Connections
     {
         public int SessionId { get; set; }
         public int CID { get; set; }
-        public ConnectionHandler Connection { get; set; }
+        public IGatewayPort GatewayPort { get; set; }
 
         private string username { get; set; }
         private string password { get; set; }
-        public RabbitMqHandler RabbitMQ { get; set; }
+        public IMessagePublisherPort MessagePublisherPort { get; set; }
 
         private Dictionary<string, string> Queues = new Dictionary<string, string>();
 
-        public SessionHandler(ConnectionHandler connection, RabbitMqHandler rabbitMQ)
+        public SessionHandler(IGatewayPort gatewayPort, IMessagePublisherPort messagePublisherPort)
         {
-            Connection = connection;
-            RabbitMQ = rabbitMQ;
+            GatewayPort = gatewayPort;
+            MessagePublisherPort = messagePublisherPort;
             SessionId = new Random().Next(1, 10000);
         }
 
         public async Task GetCreds()
         {
-            HttpResponseMessage credentials = await Connection.SendRequestAsync("api/token/", HttpMethod.Get);
+            string credentials = await GatewayPort.Get("token");
             Console.WriteLine(credentials.StatusCode);
             if (credentials.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -93,7 +94,7 @@ namespace odysseyAnalytics.Connections
                 };
                 var message = JsonConvert.SerializeObject(session_payload);
                 await RabbitMQ.PublishMessage(this.Queues["end_session"], message);
-                this.Connection.Dispose();
+                this.GatewayPort.Dispose();
                 await this.RabbitMQ.Close();
             }
             catch (Exception e)
