@@ -30,7 +30,7 @@ namespace odysseyAnalytics.Connections
             _cacheManager = cacheManager;
         }
 
-        public async Task Connect(string host, string username, string password, string vHost = "/", int port = 5672, bool checkInternetConnectionFirst = false)
+        public async Task Connect(string host, string username, string password, string vHost = "analytic", int port = 5672, bool checkInternetConnectionFirst = false)
         {
             try
             {

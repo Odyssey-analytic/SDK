@@ -7,10 +7,11 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using odysseyAnalytics.Core.Application.Gateway;
 using System.Linq;
+using odysseyAnalytics.Core.Ports;
 
 namespace odysseyAnalytics.Adapters.REST
 {
-    public class RESTAdapter
+    public class RESTAdapter : IGatewayPort
     {
         private readonly HttpClient httpClient;
         private readonly string baseUrl;

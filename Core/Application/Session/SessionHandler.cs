@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
-using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using odysseyAnalytics.Core.Ports;
 
-
-namespace odysseyAnalytics.Connections
+namespace odysseyAnalytics.Core.Application.Session
 {
     public class SessionHandler
     {

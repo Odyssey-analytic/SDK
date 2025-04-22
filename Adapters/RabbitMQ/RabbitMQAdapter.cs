@@ -1,17 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using odysseyAnalytics.Core.Application.Events;
 using odysseyAnalytics.Core.Ports;
 using RabbitMQ.Client;
+using System.Collections.Generic;
+using System.Text;
 
 namespace odysseyAnalytics.Adapters.RabbitMQ
 {
-    public class RabbitMQAdapter : IMessagePublisherPort
+    public class RabbitMQAdapter : IMessagePublisherPort, IConnectablePublisher
     {
-        private IConnection _connection;
-        private IChannel _channel;
-        
-        public Task<T> PublishMessage<T>(T analyticsEvent) where T : AnalyticsEvent
+        private IConnection connection;
+        private IChannel channel;
+
+        public async Task ConnectAsync(string host, string username, string password, int port = 5672,
+            string vhost = "/")
         {
             var factory = new ConnectionFactory()
             {
@@ -19,28 +23,42 @@ namespace odysseyAnalytics.Adapters.RabbitMQ
                 UserName = username,
                 Password = password,
                 Port = port,
-                VirtualHost = vHost,
+                VirtualHost = vhost,
                 AutomaticRecoveryEnabled = true,
                 NetworkRecoveryInterval = TimeSpan.FromSeconds(5)
             };
 
-            _connection =await factory.CreateConnectionAsync();
-            _channel = await _connection.CreateChannelAsync();
+            connection = await factory.CreateConnectionAsync();
+            channel = await connection.CreateChannelAsync();
+
+            await Task.CompletedTask;
         }
 
-        private RabbitMQDTO MapToDto(AnalyticsEvent evt)
+        public async Task<T> PublishMessage<T>(T analyticsEvent) where T : AnalyticsEvent
         {
-            return new RabbitMQDTO
-            {
-                EventName = evt.EventName,
-                QueueName = evt.QueueName,
-                EventTime = evt.EventTime,
-                SessionId = evt.SessionId,
-                ClientId = evt.ClientId,
-                Priority = evt.Priority,
-                Data = evt.Data
-            };
+            if (channel == null)
+                throw new System.InvalidOperationException("Not connected to message broker.");
+
+            string queueName = analyticsEvent.QueueName;
+            string message = analyticsEvent.GetRawDataJson();
+
+            var body = Encoding.UTF8.GetBytes(message);
+
+            await channel.BasicPublishAsync(
+                exchange: "",
+                routingKey: queueName,
+                body: body);
+
+            return await Task.FromResult(analyticsEvent);
+        }
+
+        public async Task CloseAsync()
+        {
+            await channel?.CloseAsync();
+            connection?.CloseAsync();
+            channel?.DisposeAsync();
+            connection?.DisposeAsync();
+            await Task.CompletedTask;
         }
     }
-    
 }
