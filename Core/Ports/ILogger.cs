@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace odysseyAnalytics.Types
+namespace odysseyAnalytics.Core.Ports
 {
     public interface ILogger
     {

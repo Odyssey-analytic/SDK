@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using odysseyAnalytics.Core.Application.Gateway;
 
 namespace odysseyAnalytics.Core.Ports
 {
     public interface IGatewayPort
     {
-        Task Update();
-        Task<T> Get<T>(string id);
+        Task<bool> SendAsync(GatewayPayload payload); // POST
+        Task<Dictionary<string, object>> FetchAsync(GatewayPayload payload); // GET
     }
 }

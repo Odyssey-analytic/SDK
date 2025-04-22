@@ -2,8 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
+using odysseyAnalytics.Adapters.Logger;
 using odysseyAnalytics.Exceptions;
-using odysseyAnalytics.Logging;
 
 namespace odysseyAnalytics.Connections
 {
