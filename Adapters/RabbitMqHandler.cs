@@ -2,9 +2,9 @@
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using odysseyAnalytics.Adapters.Logger;
 using odysseyAnalytics.Core.Ports;
 using RabbitMQ.Client;
-using odysseyAnalytics.Logging;
 using odysseyAnalytics.Storage;
 
 

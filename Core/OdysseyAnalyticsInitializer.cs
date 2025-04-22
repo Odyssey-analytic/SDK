@@ -1,7 +1,7 @@
-﻿using odysseyAnalytics.Adapters.Sqllite;
+﻿using odysseyAnalytics.Adapters.Logger;
+using odysseyAnalytics.Adapters.Sqllite;
 using odysseyAnalytics.Connections;
 using odysseyAnalytics.Core.Ports;
-using odysseyAnalytics.Logging;
 using odysseyAnalytics.Storage;
 using odysseyAnalytics.Types;
 
