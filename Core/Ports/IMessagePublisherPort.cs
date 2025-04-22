@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using odysseyAnalytics.Core.Application.Events;
 
 namespace odysseyAnalytics.Core.Ports
 {
     public interface IMessagePublisherPort
     {
-        Task<T> PublishMessage<T>(string message);
+        Task<T> PublishMessage<T>(T analyticsEvent) where T : AnalyticsEvent;
     }
 }
