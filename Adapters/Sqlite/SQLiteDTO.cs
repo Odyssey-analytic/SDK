@@ -2,8 +2,7 @@
 using odysseyAnalytics.Core.Application.Events;
 using SQLite;
 
-
-namespace odysseyAnalytics.Adapters.Sqllite
+namespace odysseyAnalytics.Adapters.Sqlite
 {
     public class SQLiteDTO
     {

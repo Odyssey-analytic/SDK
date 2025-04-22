@@ -16,9 +16,9 @@ namespace odysseyAnalytics.Core.Application.Events
 
         private string dataJson;
 
-        public Dictionary<string, object> Data
+        public Dictionary<string, string> Data
         {
-            get => JsonConvert.DeserializeObject<Dictionary<string, object>>(dataJson);
+            get => JsonConvert.DeserializeObject<Dictionary<string, string>>(dataJson);
             set => dataJson = JsonConvert.SerializeObject(value);
         }
 

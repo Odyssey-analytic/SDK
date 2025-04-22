@@ -11,15 +11,16 @@ using odysseyAnalytics.Core.Ports;
 
 namespace odysseyAnalytics.Adapters.REST
 {
-    public class RESTAdapter : IGatewayPort
+    public class RESTAdapter : IGatewayPort , IGatewayPortResponse
     {
         private readonly HttpClient httpClient;
         private readonly string baseUrl;
         private bool disposed;
-
+        public string StatusCode { get; set; }
+        public string Data { get; set; }
         public RESTAdapter(string baseUrl)
         {
-            this.baseUrl = baseUrl.TrimEnd('/');
+            this.baseUrl = baseUrl;
             httpClient = new HttpClient();
         }
 
@@ -42,23 +43,26 @@ namespace odysseyAnalytics.Adapters.REST
             }
         }
 
-        public async Task<Dictionary<string, object>> FetchAsync(GatewayPayload payload)
+        public async Task<IGatewayPortResponse> FetchAsync(GatewayPayload payload)
         {
             try
             {
-                string query = string.Join("&",
-                    payload.Data.Select(kv =>
-                        $"{Uri.EscapeDataString(kv.Key)}={Uri.EscapeDataString(kv.Value.ToString())}"));
-                string url = $"{baseUrl}{payload.Endpoint}?{query}";
-
+                string url= $"{baseUrl}{payload.Endpoint}";
+                if (payload.Data != null)
+                {
+                    string query = string.Join("&",
+                        payload.Data.Select(kv =>
+                            $"{Uri.EscapeDataString(kv.Key)}={Uri.EscapeDataString(kv.Value.ToString())}"));
+                    url = $"{baseUrl}{payload.Endpoint}?{query}";
+                }
                 ApplyAuthHeader(payload.AccessToken);
-
                 var response = await httpClient.GetAsync(url);
                 var responseString = await response.Content.ReadAsStringAsync();
-
                 if (response.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<Dictionary<string, object>>(responseString);
+                    Data = responseString;
+                    StatusCode = "OK";
+                    return JsonConvert.DeserializeObject<IGatewayPortResponse>(responseString);
                 }
             }
             catch
@@ -66,7 +70,7 @@ namespace odysseyAnalytics.Adapters.REST
                 // Optionally log
             }
 
-            return new Dictionary<string, object>(); // Return empty on failure
+            return null; // Return empty on failure
         }
 
         private void ApplyAuthHeader(string accessToken)
@@ -97,5 +101,7 @@ namespace odysseyAnalytics.Adapters.REST
         {
             Dispose(false);
         }
+
+        
     }
 }

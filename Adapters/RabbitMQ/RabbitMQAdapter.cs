@@ -14,8 +14,7 @@ namespace odysseyAnalytics.Adapters.RabbitMQ
         private IConnection connection;
         private IChannel channel;
 
-        public async Task ConnectAsync(string host, string username, string password, int port = 5672,
-            string vhost = "/")
+        public async Task ConnectAsync(string host, string username, string password,string vhost = "/", int port = 5672 )
         {
             var factory = new ConnectionFactory()
             {

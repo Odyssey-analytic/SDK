@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using odysseyAnalytics.Adapters.Sqllite;
 using odysseyAnalytics.Core.Application.Events;
+using odysseyAnalytics.Core.Ports;
 using SQLite;
 namespace odysseyAnalytics.Adapters.Sqlite
 {

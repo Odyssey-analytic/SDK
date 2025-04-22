@@ -1,102 +1,107 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using odysseyAnalytics.Core.Application.Events;
+using odysseyAnalytics.Core.Application.Gateway;
 using odysseyAnalytics.Core.Ports;
 
 namespace odysseyAnalytics.Core.Application.Session
 {
     public class SessionHandler
     {
-        public int SessionId { get; set; }
-        public int CID { get; set; }
-        public IGatewayPort GatewayPort { get; set; }
+        public int SessionId { get; private set; }
+        public int CID { get; private set; }
 
-        private string username { get; set; }
-        private string password { get; set; }
-        public IMessagePublisherPort MessagePublisherPort { get; set; }
+        private string username;
+        private string password;
+        private string token;
 
-        private Dictionary<string, string> Queues = new Dictionary<string, string>();
+        private readonly IGatewayPort gatewayPort;
+        private readonly IMessagePublisherPort messagePublisher;
+        private readonly IConnectablePublisher connection;
 
-        public SessionHandler(IGatewayPort gatewayPort, IMessagePublisherPort messagePublisherPort)
+        private readonly Dictionary<string, string> queues = new Dictionary<string, string>();
+
+        public SessionHandler(
+            IGatewayPort gatewayPort,
+            IMessagePublisherPort messagePublisher,
+            IConnectablePublisher connection,
+            ILogger logger,
+            string token
+            )
         {
-            GatewayPort = gatewayPort;
-            MessagePublisherPort = messagePublisherPort;
+            this.gatewayPort = gatewayPort;
+            this.messagePublisher = messagePublisher;
+            this.connection = connection;
+            this.token = token;
             SessionId = new Random().Next(1, 10000);
         }
 
-        public async Task GetCreds()
+        public async Task InitializeSessionAsync()
         {
-            string credentials = await GatewayPort.Get("token");
-            Console.WriteLine(credentials.StatusCode);
-            if (credentials.StatusCode == System.Net.HttpStatusCode.OK)
+            GatewayPayload payload = new GatewayPayload();
+            payload.Data=null;
+            payload.Endpoint = "api/token/" ;
+            payload.AccessToken = token;
+            
+            var response = await gatewayPort.FetchAsync(payload);
+
+            if (response.StatusCode == "OK")
             {
-                JObject data = JObject.Parse(credentials.Content.ReadAsStringAsync().Result);
-                Console.WriteLine(data);
-                CID = int.Parse(data["cid"].ToString());
-                username = data["rb_username"].ToString();
-                password = data["rb_password"].ToString();
-                JArray queues = (JArray)data["queues"];
-                for (int i = 0; i < queues.Count; i++)
+                JObject data = JObject.Parse(response.Data);
+
+                CID = data["cid"]?.Value<int>() ?? 0;
+                username = data["rb_username"]?.ToString();
+                password = data["rb_password"]?.ToString();
+
+                foreach (var queue in data["queues"] as JArray)
                 {
-                    this.Queues.Add(queues[i].Value<string>("name"), queues[i].Value<string>("fullname"));
+                    var name = queue["name"]?.ToString();
+                    var fullname = queue["fullname"]?.ToString();
+                    if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(fullname))
+                        queues[name] = fullname;
                 }
 
-                foreach (var v in Queues)
-                {
-                    Console.WriteLine(v.Value);
-                    Console.WriteLine(v.Key);
-                }
+                await connection.ConnectAsync("185.8.172.219", username, password, "analytic");
             }
             else
             {
-                System.Console.WriteLine("An Error Has Occurred.");
-            }
-
-            try
-            {
-                await RabbitMQ.Connect("185.8.172.219", username, password, "analytic");
-                System.Console.WriteLine("Rabbit MQ connection established.");
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
+                throw new Exception("Failed to get credentials from gateway.");
             }
         }
 
-        public async void SessionStart()
+        public async Task StartSessionAsync(string platform)
         {
-            var session_payload = new
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("platform", platform);
+            var evt = new AnalyticsEvent
             {
-                time = DateTime.UtcNow.ToString("o"),
-                client = this.CID,
-                session = this.SessionId,
-                platform = "android"
+                EventName = "start_session",
+                QueueName = queues["start_session"],
+                EventTime = DateTime.UtcNow,
+                SessionId = SessionId.ToString(),
+                ClientId = CID.ToString(),
+                Data = data
             };
-            var message = JsonConvert.SerializeObject(session_payload);
-            await RabbitMQ.PublishMessage(this.Queues["start_session"], message);
+
+            await messagePublisher.PublishMessage(evt);
         }
 
-        public async void SessionEnd()
+        public async Task EndSessionAsync()
         {
-            try
+            var evt = new AnalyticsEvent
             {
-                var session_payload = new
-                {
-                    time = DateTime.UtcNow.ToString("o"),
-                    client = this.CID,
-                    session = this.SessionId,
-                };
-                var message = JsonConvert.SerializeObject(session_payload);
-                await RabbitMQ.PublishMessage(this.Queues["end_session"], message);
-                this.GatewayPort.Dispose();
-                await this.RabbitMQ.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+                EventName = "end_session",
+                QueueName = queues["end_session"],
+                EventTime = DateTime.UtcNow,
+                SessionId = SessionId.ToString(),
+                ClientId = CID.ToString(),
+                Data = new Dictionary<string, string>()
+            };
+
+            await messagePublisher.PublishMessage(evt);
+            await connection.CloseAsync();
         }
     }
 }

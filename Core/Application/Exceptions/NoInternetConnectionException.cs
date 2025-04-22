@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace odysseyAnalytics.Exceptions
+namespace odysseyAnalytics.Core.Application.Exceptions
 {
     public class NoInternetConnectionException : Exception
     {

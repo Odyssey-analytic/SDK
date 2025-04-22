@@ -7,6 +7,20 @@ namespace odysseyAnalytics.Core.Ports
     public interface IGatewayPort
     {
         Task<bool> SendAsync(GatewayPayload payload); // POST
-        Task<Dictionary<string, object>> FetchAsync(GatewayPayload payload); // GET
+        Task<IGatewayPortResponse> FetchAsync(GatewayPayload payload); // GET
     }
+
+    public interface IGatewayPortResponse
+    {
+        string StatusCode { get; set; }
+        string Data { get; set; } 
+        
+    }
+    
+    
+    
+    
+    
+    
+    
 }
