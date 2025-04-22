@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using odysseyAnalytics.Core.Application.Events;
 using odysseyAnalytics.Core.Ports;
 using SQLite;
-using odysseyAnalytics.Events;
 
 #if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
 using UnityEngine;
