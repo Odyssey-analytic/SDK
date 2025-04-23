@@ -16,7 +16,7 @@ namespace odysseyAnalytics.Adapters.Logger
 #if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
             Debug.Log($"[INFO] {message}");
 #else
-            Debug.WriteLine($"[INFO] {message}");
+            Console.WriteLine($"[INFO] {message}");
 #endif
         }
 
