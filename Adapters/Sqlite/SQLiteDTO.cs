@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using odysseyAnalytics.Core.Application.Events;
 using SQLite;
 
@@ -18,15 +19,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
         public AnalyticsEvent ToDomain()
         {
             var evt = new AnalyticsEvent
-            {
-                Id = Id,
-                EventName = EventName,
-                QueueName = QueueName,
-                EventTime = EventTime,
-                SessionId = SessionId,
-                ClientId = ClientId,
-                Priority = Priority
-            };
+                (EventName, QueueName, EventTime, SessionId, ClientId, Priority, new Dictionary<string, string>());
             evt.SetRawDataJson(DataJson);
             return evt;
         }

@@ -17,72 +17,43 @@ namespace odysseyAnalytics.Adapters.Sqlite
             db.CreateTable<SQLiteDTO>();
         }
 
-        public IEnumerable<T> ReadAll<T>()
+        public IEnumerable<T> ReadAll<T>() where T : AnalyticsEvent
         {
-            if (typeof(T) == typeof(AnalyticsEvent))
-            {
                 var dtos = db.Table<SQLiteDTO>().ToList();
                 return dtos.Select(dto => (T)(object)dto.ToDomain());
-            }
-            throw new NotSupportedException($"Unsupported type {typeof(T).Name}");
         }
 
-        public T Read<T>(string key)
+        public T Read<T>(string key) where T : AnalyticsEvent
         {
-            if (typeof(T) == typeof(AnalyticsEvent) && int.TryParse(key, out int id))
-            {
-                var dto = db.Find<SQLiteDTO>(id);
+                var dto = db.Find<SQLiteDTO>(int.Parse(key));
                 return (T)(object)dto?.ToDomain();
-            }
-            throw new NotSupportedException($"Unsupported type or key: {typeof(T).Name}");
         }
 
-        public void Write<T>(string key, T value) where T : new()
+        public void Write<T>(string key, T value) where T : AnalyticsEvent
         {
-            if (value is AnalyticsEvent evt)
-            {
-                var dto = SQLiteDTO.FromDomain(evt);
+                var dto = SQLiteDTO.FromDomain(value);
                 db.Insert(dto);
-            }
-            else
-            {
-                throw new NotSupportedException($"Unsupported type {typeof(T).Name}");
-            }
         }
 
-        public void Delete<T>(string key)
+        public void Delete<T>(string key) where T : AnalyticsEvent
         {
-            if (typeof(T) == typeof(AnalyticsEvent) && int.TryParse(key, out int id))
-            {
-                db.Delete<SQLiteDTO>(id);
-            }
-            else
-            {
-                throw new NotSupportedException($"Unsupported type or key: {typeof(T).Name}");
-            }
+                db.Delete<SQLiteDTO>(int.Parse(key));
         }
 
-        public void Update<T>(string key, T value)
+        public void Update<T>(string key, T value) where T : AnalyticsEvent
         {
-            if (value is AnalyticsEvent evt && int.TryParse(key, out int id))
-            {
-                var dto = SQLiteDTO.FromDomain(evt);
-                dto.Id = id;
+            
+                var dto = SQLiteDTO.FromDomain(value);
+                dto.Id = int.Parse(key);
                 db.Update(dto);
-            }
-            else
-            {
-                throw new NotSupportedException($"Unsupported type or key: {typeof(T).Name}");
-            }
         }
 
-        public IEnumerable<T> ReadWhere<T>(Func<T, bool> predicate)
+        public IEnumerable<T> ReadWhere<T>(Func<T, bool> predicate) where T : AnalyticsEvent
         {
             var all = ReadAll<T>();
             return all.Where(predicate);
         }
 
-        // IDisposable implementation
         public void Dispose()
         {
             Dispose(true);

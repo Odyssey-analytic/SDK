@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using odysseyAnalytics.Core.Application.Events;
 using odysseyAnalytics.Core.Ports;
 using RabbitMQ.Client;
@@ -29,8 +30,7 @@ namespace odysseyAnalytics.Adapters.RabbitMQ
 
             connection = await factory.CreateConnectionAsync();
             channel = await connection.CreateChannelAsync();
-
-            await Task.CompletedTask;
+            Console.WriteLine("Connection established");
         }
 
         public async Task<T> PublishMessage<T>(T analyticsEvent) where T : AnalyticsEvent
@@ -39,10 +39,13 @@ namespace odysseyAnalytics.Adapters.RabbitMQ
                 throw new System.InvalidOperationException("Not connected to message broker.");
 
             string queueName = analyticsEvent.QueueName;
-            string message = analyticsEvent.GetRawDataJson();
-
-            var body = Encoding.UTF8.GetBytes(message);
-
+            string message = analyticsEvent.Data["platform"];
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("platform", message);
+            data.Add("time",analyticsEvent.EventTime.ToString("yyyy-MM-dd HH:mm:ss.ffffff"));
+            data.Add("client", analyticsEvent.ClientId);
+            data.Add("session", analyticsEvent.SessionId);
+            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
             await channel.BasicPublishAsync(
                 exchange: "",
                 routingKey: queueName,

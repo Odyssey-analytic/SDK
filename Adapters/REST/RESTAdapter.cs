@@ -11,16 +11,16 @@ using odysseyAnalytics.Core.Ports;
 
 namespace odysseyAnalytics.Adapters.REST
 {
-    public class RESTAdapter : IGatewayPort , IGatewayPortResponse
+    public class RESTAdapter : IGatewayPort 
     {
         private readonly HttpClient httpClient;
         private readonly string baseUrl;
         private bool disposed;
-        public string StatusCode { get; set; }
-        public string Data { get; set; }
+        IGatewayPortResponse gatewayPortResponse;
         public RESTAdapter(string baseUrl)
         {
             this.baseUrl = baseUrl;
+            gatewayPortResponse = new IGatewayPortResponse();
             httpClient = new HttpClient();
         }
 
@@ -48,6 +48,8 @@ namespace odysseyAnalytics.Adapters.REST
             try
             {
                 string url= $"{baseUrl}{payload.Endpoint}";
+                Console.WriteLine(url);
+                
                 if (payload.Data != null)
                 {
                     string query = string.Join("&",
@@ -56,18 +58,22 @@ namespace odysseyAnalytics.Adapters.REST
                     url = $"{baseUrl}{payload.Endpoint}?{query}";
                 }
                 ApplyAuthHeader(payload.AccessToken);
+                Console.WriteLine("Applied");
                 var response = await httpClient.GetAsync(url);
                 var responseString = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(responseString);
+                Console.WriteLine(response.StatusCode);
                 if (response.IsSuccessStatusCode)
                 {
-                    Data = responseString;
-                    StatusCode = "OK";
-                    return JsonConvert.DeserializeObject<IGatewayPortResponse>(responseString);
+                    Console.WriteLine("1111111");
+                    gatewayPortResponse.Data = responseString;
+                    gatewayPortResponse.StatusCode = "OK";
+                    return gatewayPortResponse;
                 }
             }
-            catch
+            catch(Exception e)
             {
-                // Optionally log
+                Console.WriteLine(e.Message);
             }
 
             return null; // Return empty on failure
@@ -78,7 +84,7 @@ namespace odysseyAnalytics.Adapters.REST
             httpClient.DefaultRequestHeaders.Authorization = null;
             if (!string.IsNullOrEmpty(accessToken))
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"{accessToken}");
             }
         }
 
