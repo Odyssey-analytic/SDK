@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using odysseyAnalytics.Core.Application.Events;
 using odysseyAnalytics.Core.Ports;
+
 namespace odysseyAnalytics.Core.Application.CacheManager
 {
     public class CacheManager
@@ -13,22 +14,14 @@ namespace odysseyAnalytics.Core.Application.CacheManager
             _databasePort = databasePort;
         }
 
-        public void SaveEvent(string name, string queueName, string clientId, string sessionId, Dictionary<string, string> eventDatas)
+        public void SaveEvent(string name, string queueName, string clientId, string sessionId,
+            Dictionary<string, string> eventDatas)
         {
             int priority = name == "start_session" ? 0 : 5;
 
-            var evt = new AnalyticsEvent
-            {
-                EventName = name,
-                SessionId = sessionId,
-                QueueName = queueName,
-                EventTime = DateTime.UtcNow,
-                Data = eventDatas,
-                ClientId = clientId,
-                Priority = priority
-            };
-
-            _databasePort.Write(evt.Id.ToString(), evt);
+            var evt = new AnalyticsEvent(name, queueName, DateTime.UtcNow, sessionId, clientId, priority, eventDatas);
+            
+            _databasePort.Write<AnalyticsEvent>(evt.Id.ToString(), evt);
         }
 
         public List<AnalyticsEvent> LoadAllEvents()

@@ -10,10 +10,20 @@ namespace odysseyAnalytics.Core.Ports
         Task<IGatewayPortResponse> FetchAsync(GatewayPayload payload); // GET
     }
 
-    public interface IGatewayPortResponse
+    public class IGatewayPortResponse
     {
-        string StatusCode { get; set; }
-        string Data { get; set; } 
+        public IGatewayPortResponse(string statusCode, string data)
+        {
+            this.StatusCode = statusCode;
+            this.Data = data;
+        }
+
+        public IGatewayPortResponse()
+        {
+            
+        }
+        public string StatusCode { get; set; }
+        public string Data { get; set; } 
         
     }
     
