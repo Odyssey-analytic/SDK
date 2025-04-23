@@ -20,8 +20,8 @@ namespace odysseyAnalytics.Core.Application.Session
         private readonly IGatewayPort gatewayPort;
         private readonly IMessagePublisherPort messagePublisher;
         private readonly IConnectablePublisher connection;
-
-        private readonly Dictionary<string, string> queues = new Dictionary<string, string>();
+        private readonly ILogger logger;
+        private Dictionary<string, string> queues = new Dictionary<string, string>();
 
         public SessionHandler(
             IGatewayPort gatewayPort,
@@ -29,23 +29,26 @@ namespace odysseyAnalytics.Core.Application.Session
             IConnectablePublisher connection,
             ILogger logger,
             string token
-            )
+        )
         {
             this.gatewayPort = gatewayPort;
             this.messagePublisher = messagePublisher;
             this.connection = connection;
             this.token = token;
+            this.logger = logger;
             SessionId = new Random().Next(1, 10000);
         }
 
         public async Task InitializeSessionAsync()
         {
-            GatewayPayload payload = new GatewayPayload();
-            payload.Data=null;
-            payload.Endpoint = "api/token/" ;
-            payload.AccessToken = token;
-            
+            logger.Log("Initializing session...");
+            GatewayPayload payload = new GatewayPayload("api/token/", null, token);
+            logger.Log("payload_generated");
+            Console.WriteLine("INITIALIZE SESSION");
+            Console.WriteLine(payload.AccessToken);
             var response = await gatewayPort.FetchAsync(payload);
+            Console.WriteLine(response.StatusCode);
+
 
             if (response.StatusCode == "OK")
             {
@@ -63,6 +66,7 @@ namespace odysseyAnalytics.Core.Application.Session
                         queues[name] = fullname;
                 }
 
+                Console.WriteLine(queues.Count);
                 await connection.ConnectAsync("185.8.172.219", username, password, "analytic");
             }
             else
@@ -76,14 +80,10 @@ namespace odysseyAnalytics.Core.Application.Session
             Dictionary<string, string> data = new Dictionary<string, string>();
             data.Add("platform", platform);
             var evt = new AnalyticsEvent
-            {
-                EventName = "start_session",
-                QueueName = queues["start_session"],
-                EventTime = DateTime.UtcNow,
-                SessionId = SessionId.ToString(),
-                ClientId = CID.ToString(),
-                Data = data
-            };
+            (
+                "start_session", queues["start_session"], DateTime.UtcNow, SessionId.ToString(),
+                CID.ToString(), 0, new Dictionary<string, string>()
+            );
 
             await messagePublisher.PublishMessage(evt);
         }
@@ -91,14 +91,10 @@ namespace odysseyAnalytics.Core.Application.Session
         public async Task EndSessionAsync()
         {
             var evt = new AnalyticsEvent
-            {
-                EventName = "end_session",
-                QueueName = queues["end_session"],
-                EventTime = DateTime.UtcNow,
-                SessionId = SessionId.ToString(),
-                ClientId = CID.ToString(),
-                Data = new Dictionary<string, string>()
-            };
+            (
+                "end_session", queues["end_session"], DateTime.UtcNow, SessionId.ToString(),
+                CID.ToString(), 5, new Dictionary<string, string>()
+            );
 
             await messagePublisher.PublishMessage(evt);
             await connection.CloseAsync();
