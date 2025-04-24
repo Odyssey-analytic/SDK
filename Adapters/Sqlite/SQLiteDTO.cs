@@ -19,7 +19,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
         public AnalyticsEvent ToDomain()
         {
             var evt = new AnalyticsEvent
-                (EventName, QueueName, EventTime, SessionId, ClientId, Priority, new Dictionary<string, string>());
+                (EventName, QueueName, EventTime, SessionId, ClientId, Priority, new Dictionary<string, string>(),Id);
             evt.SetRawDataJson(DataJson);
             return evt;
         }

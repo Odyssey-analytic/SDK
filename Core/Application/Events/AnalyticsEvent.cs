@@ -13,7 +13,7 @@ namespace odysseyAnalytics.Core.Application.Events
         private string _clientId;
 
         public AnalyticsEvent(string eventName, string queueName, DateTime eventTime, string sessionId,
-            string clientId, int priority, Dictionary<string, string> data)
+            string clientId, int priority, Dictionary<string, string> data , int id = -1)
         {
             EventName = eventName;
             QueueName = queueName;
@@ -21,7 +21,7 @@ namespace odysseyAnalytics.Core.Application.Events
             _sessionId = sessionId;
             _clientId = clientId;
             Priority = priority;
-            
+            Id = id;
             _data = data ?? new Dictionary<string, string>();
             
             _data["time"] = EventTime.ToString("yyyy-MM-ddTHH:mm:ssZ");

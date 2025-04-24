@@ -42,5 +42,10 @@ namespace odysseyAnalytics.Core.Application.CacheManager
                 _databasePort.Delete<AnalyticsEvent>(evt.Id.ToString());
             }
         }
+
+        public void Close()
+        {
+            _databasePort.Close();
+        }
     }
 }

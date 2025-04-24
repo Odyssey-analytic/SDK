@@ -43,7 +43,7 @@ namespace odysseyAnalytics.Core.Application.Session
             this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.databasePort = databasePort ?? throw new ArgumentNullException(nameof(databasePort));
-            this.cacheHandler = new CacheHandler(databasePort);
+            this.cacheHandler = new CacheHandler(this.databasePort);
             this.token = token;
             SessionId = new Random().Next(1, 10000);
         }
@@ -85,10 +85,15 @@ namespace odysseyAnalytics.Core.Application.Session
 
                         if (cacheEvents.Count > 0)
                         {
+                            logger.Log($"Found {cacheEvents.Count} analytic cache events");
                             foreach (var evt in cacheEvents)
                             {
+                                logger.Log($"Found analytic cache event {evt.Id}");
+                                AnalyticsEvent analyticEvent = new AnalyticsEvent(evt.EventName,GetQueueName(evt.EventName),evt.EventTime,evt.SessionId,CID.ToString(),evt.Priority,evt.Data);
                                 evt.ClientId = CID.ToString();
-                                await messagePublisher.PublishMessage(evt);
+                                evt.QueueName = GetQueueName(evt.EventName);
+                                await messagePublisher.PublishMessage(analyticEvent);
+                                cacheHandler.DeleteEvent(evt.Id);
                             }
                         }
                     }
@@ -96,56 +101,72 @@ namespace odysseyAnalytics.Core.Application.Session
                     {
                         if (ex is OdysseyAnalyticsException)
                         {
-                            throw;
+                            logger.Error(null,ex);
                         }
 
-                        throw new NotConnectedToServerException("Failed to process server response", ex);
+                        logger.Error(null,new NotConnectedToServerException("Failed to get response from server"));
                     }
                 }
                 else
                 {
-                    throw new AuthenticationException($"Authentication failed with status: {response.StatusCode}");
+                    logger.Error(null,new AuthenticationException($"Authentication failed with status: {response.StatusCode}"));
                 }
             }
             catch (Exception ex)
             {
                 if (ex is OdysseyAnalyticsException)
                 {
-                    throw;
+                    logger.Error(null  ,ex);
                 }
 
                 if (ex.Message.Contains("No such host") || ex.Message.Contains("network") ||
                     ex.Message.Contains("connection"))
                 {
-                    throw new NoInternetConnectionException("Cannot connect to analytics server", ex);
+                    logger.Error(null,new NoInternetConnectionException("Cannot connect to analytics server"));
                 }
 
-                throw new NotConnectedToServerException("Failed to initialize session", ex);
+                logger.Error(null,new NotConnectedToServerException("Failed to initialize session"));
             }
         }
 
         private void AddQueueFullNameToQueueList(JObject data)
         {
-            if (data["queues"] == null || !(data["queues"] is JArray))
+            try
             {
-                throw new NotConnectedToServerException("Invalid server response: queues data missing or invalid");
-            }
-
-            foreach (var queue in data["queues"] as JArray)
-            {
-                var name = queue["name"]?.ToString();
-                var fullname = queue["fullname"]?.ToString();
-                if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(fullname))
-                    queues[name] = fullname;
-            }
-
-            foreach (var essentialQueue in new[] { "start_session", "end_session" })
-            {
-                if (!queues.ContainsKey(essentialQueue))
+                if (data["queues"] == null || !(data["queues"] is JArray))
                 {
-                    throw new QueueNotFoundException(essentialQueue, "Required queue not found in server response");
+                    throw new NotConnectedToServerException("Invalid server response: queues data missing or invalid");
+                }
+
+                foreach (var queue in data["queues"] as JArray)
+                {
+                    var name = queue["name"]?.ToString();
+                    var fullname = queue["fullname"]?.ToString();
+                    if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(fullname))
+                        queues[name] = fullname;
+                }
+
+                foreach (var essentialQueue in new[] { "start_session", "end_session" })
+                {
+                    if (!queues.ContainsKey(essentialQueue))
+                    {
+                        throw new QueueNotFoundException(essentialQueue, "Required queue not found in server response");
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                if (e is OdysseyAnalyticsException)
+                {
+                    logger.Error(null, e);
+                }
+                else
+                {
+                    logger.Error(null,new Exception("an error occurred for given queue ", e));
+                }
+                
+            }
+
         }
 
         private void SetUserPassCidFromData(JObject data)
@@ -153,11 +174,6 @@ namespace odysseyAnalytics.Core.Application.Session
             CID = data["cid"]?.Value<int>() ?? 0;
             username = data["rb_username"]?.ToString();
             password = data["rb_password"]?.ToString();
-
-            if (CID <= 0)
-            {
-                throw new AuthenticationException("Invalid CID received from server");
-            }
         }
 
         public async Task StartSessionAsync(string platform)
@@ -170,12 +186,13 @@ namespace odysseyAnalytics.Core.Application.Session
             {
                 try
                 {
-                    cacheHandler.SaveEvent("start_session", GetQueueName("start_session"), "-1", SessionId.ToString(),
+                    cacheHandler.SaveEvent("start_session", "", "-1", SessionId.ToString(),
                         data);
+                    logger.Log("Saved event in DB");
                 }
                 catch (Exception e)
                 {
-                    logger.Error("An Error Happened in Cache: ", e);
+                    logger.Error(null, e);
                 }
             }
             else
@@ -197,11 +214,14 @@ namespace odysseyAnalytics.Core.Application.Session
                 catch (Exception ex)
                 {
                     if (ex is QueueNotFoundException)
-                        throw ex;
-                    cacheHandler.SaveEvent("start_session", GetQueueName("start_session"), "-1",
+                    {
+                        logger.Error(null, ex);
+                        return;
+                    }
+                    cacheHandler.SaveEvent("start_session", "", "-1",
                         SessionId.ToString(),
                         data);
-                    throw new NotConnectedToServerException("Failed to Connect to server", ex);
+                    logger.Error(null,new NotConnectedToServerException("Failed to Connect to server"));
                 }
             }
         }
@@ -213,7 +233,7 @@ namespace odysseyAnalytics.Core.Application.Session
             {
                 try
                 {
-                    cacheHandler.SaveEvent("end_session", GetQueueName("end_session"), "-1", SessionId.ToString(),
+                    cacheHandler.SaveEvent("end_session", "", "-1", SessionId.ToString(),
                         data);
                 }
                 catch (Exception e)
@@ -240,20 +260,24 @@ namespace odysseyAnalytics.Core.Application.Session
                 catch (Exception ex)
                 {
                     if (ex is QueueNotFoundException)
-                        throw ex;
-                    cacheHandler.SaveEvent("end_session", GetQueueName("end_session"), "-1",
+                    {
+                        logger.Error(null, ex);
+                        return;
+                    }
+                    cacheHandler.SaveEvent("end_session", "", "-1",
                         SessionId.ToString(),
                         data);
-                    throw new NotConnectedToServerException("Failed to Connect to server", ex);
+                    logger.Error(null,new NotConnectedToServerException("Failed to Connect to server"));
                 }
             }
+            cacheHandler.Close();
         }
 
         private string GetQueueName(string queueKey)
         {
             if (!queues.TryGetValue(queueKey, out string queueName))
             {
-                throw new QueueNotFoundException(queueKey);
+               logger.Error(null,new QueueNotFoundException(queueKey));
             }
 
             return queueName;

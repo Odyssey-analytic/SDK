@@ -25,7 +25,7 @@ namespace odysseyAnalytics.Adapters.Logger
 #if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
             Debug.LogWarning($"[WARN] {message}");
 #else
-            Debug.WriteLine($"[WARN] {message}");
+            Console.WriteLine($"[WARN] {message}");
 #endif
         }
 
@@ -34,9 +34,12 @@ namespace odysseyAnalytics.Adapters.Logger
 #if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
             Debug.LogError($"[ERROR] {message}\n{(ex != null ? ex.ToString() : "")}");
 #else
-            Debug.WriteLine($"[ERROR] {message}");
+            if (message != null)
+            {
+                Console.WriteLine($"[ERROR] {message}");
+            }
             if (ex != null)
-                Debug.WriteLine(ex.ToString());
+                Console.WriteLine($"[ERROR] {ex.Message}");
 #endif
         }
     }

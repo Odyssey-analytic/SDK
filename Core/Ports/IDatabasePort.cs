@@ -13,5 +13,7 @@ namespace odysseyAnalytics.Core.Ports
         void Update<T>(string key, T value) where T : AnalyticsEvent;
 
         IEnumerable<T> ReadWhere<T>(Func<T, bool> predicate) where T : AnalyticsEvent;
+
+        void Close();
     }
 }
