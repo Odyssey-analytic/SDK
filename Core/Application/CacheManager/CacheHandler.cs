@@ -5,11 +5,11 @@ using odysseyAnalytics.Core.Ports;
 
 namespace odysseyAnalytics.Core.Application.CacheManager
 {
-    public class CacheManager
+    public class CacheHandler
     {
         private readonly IDatabasePort _databasePort;
 
-        public CacheManager(IDatabasePort databasePort)
+        public CacheHandler(IDatabasePort databasePort)
         {
             _databasePort = databasePort;
         }

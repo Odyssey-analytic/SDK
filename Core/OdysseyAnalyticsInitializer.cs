@@ -48,7 +48,7 @@ namespace odysseyAnalytics.Core
         public OdysseyAnalyticsInitializer(IDatabasePort databasePort, IMessagePublisherPort messagePublisherPort,IConnectablePublisher connectablePublisher, IGatewayPort gatewayPort, ILogger logger ,string token)
         {
             var sessionHandler = new SessionHandler(gatewayPort,messagePublisherPort,connectablePublisher,logger,token);
-            var eventCacheManager = new CacheManager(databasePort);
+            var eventCacheManager = new CacheHandler(databasePort);
         }
     }
 }
