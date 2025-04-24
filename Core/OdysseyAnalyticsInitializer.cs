@@ -17,17 +17,17 @@ namespace odysseyAnalytics.Core
         private IGatewayPort _gatewayPort;
         private ILogger _logger;
         private string token;
-        
-        public OdysseyAnalyticsInitializerBuilder(string db_path , string token)
+
+        public OdysseyAnalyticsInitializerBuilder(string db_path, string token)
         {
             _databasePort = new SqliteAdapter(db_path);
-            RabbitMQAdapter temp= new RabbitMQAdapter();
+            RabbitMQAdapter temp = new RabbitMQAdapter();
             _publisher = temp;
             _messagePublisherPort = temp;
             _gatewayPort = new RESTAdapter("https://odysseyanalytics.ir/api/");
             _logger = new DefaultLogger();
-            
-            this.token=token;
+
+            this.token = token;
         }
 
         public OdysseyAnalyticsInitializerBuilder SetDatabasePort(IDatabasePort databasePort)
@@ -39,15 +39,19 @@ namespace odysseyAnalytics.Core
         public OdysseyAnalyticsInitializer Build()
         {
             _analyticsInitializer =
-                new OdysseyAnalyticsInitializer(_databasePort, _messagePublisherPort, _publisher ,_gatewayPort, _logger, token);
+                new OdysseyAnalyticsInitializer(_databasePort, _messagePublisherPort, _publisher, _gatewayPort, _logger,
+                    token);
             return _analyticsInitializer;
         }
     }
+
     public class OdysseyAnalyticsInitializer
     {
-        public OdysseyAnalyticsInitializer(IDatabasePort databasePort, IMessagePublisherPort messagePublisherPort,IConnectablePublisher connectablePublisher, IGatewayPort gatewayPort, ILogger logger ,string token)
+        public OdysseyAnalyticsInitializer(IDatabasePort databasePort, IMessagePublisherPort messagePublisherPort,
+            IConnectablePublisher connectablePublisher, IGatewayPort gatewayPort, ILogger logger, string token)
         {
-            var sessionHandler = new SessionHandler(gatewayPort,messagePublisherPort,connectablePublisher,logger,token);
+            var sessionHandler = new SessionHandler(gatewayPort, messagePublisherPort, connectablePublisher, logger,
+                databasePort, token);
             var eventCacheManager = new CacheHandler(databasePort);
         }
     }

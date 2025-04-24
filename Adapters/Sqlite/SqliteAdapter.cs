@@ -19,7 +19,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
 
         public IEnumerable<T> ReadAll<T>() where T : AnalyticsEvent
         {
-                var dtos = db.Table<SQLiteDTO>().ToList();
+                var dtos = db.Table<SQLiteDTO>().ToList().OrderBy(o => o.Priority);
                 return dtos.Select(dto => (T)(object)dto.ToDomain());
         }
 
