@@ -39,13 +39,8 @@ namespace odysseyAnalytics.Adapters.RabbitMQ
                 throw new System.InvalidOperationException("Not connected to message broker.");
 
             string queueName = analyticsEvent.QueueName;
-            string message = analyticsEvent.Data["platform"];
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            data.Add("platform", message);
-            data.Add("time",analyticsEvent.EventTime.ToString("yyyy-MM-dd HH:mm:ss.ffffff"));
-            data.Add("client", analyticsEvent.ClientId);
-            data.Add("session", analyticsEvent.SessionId);
-            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
+            string x = analyticsEvent.GetRawDataJson();
+            var body = Encoding.UTF8.GetBytes(x);
             await channel.BasicPublishAsync(
                 exchange: "",
                 routingKey: queueName,
