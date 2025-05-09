@@ -81,6 +81,9 @@ namespace odysseyAnalytics.Core.Application.Session
                         // Connect to message broker
                         await connection.ConnectAsync("185.8.172.219", username, password, "analytic");
                         isSessionInitialized = true;
+
+                        #region CacheHandlingRegion
+
                         List<AnalyticsEvent> cacheEvents = cacheHandler.LoadAllEvents();
 
                         if (cacheEvents.Count > 0)
@@ -96,6 +99,8 @@ namespace odysseyAnalytics.Core.Application.Session
                                 cacheHandler.DeleteEvent(evt.Id);
                             }
                         }
+
+                        #endregion
                     }
                     catch (Exception ex)
                     {
@@ -178,10 +183,9 @@ namespace odysseyAnalytics.Core.Application.Session
 
         public async Task StartSessionAsync(string platform)
         {
-            Dictionary<string, string> data = new Dictionary<string, string>
-            {
-                { "platform", platform }
-            };
+            #region SavingIntoCache
+
+            // mehid joon data ro nullable kardam
             if (!isSessionInitialized)
             {
                 try
@@ -195,6 +199,9 @@ namespace odysseyAnalytics.Core.Application.Session
                     logger.Error(null, e);
                 }
             }
+
+            #endregion
+
             else
             {
                 try
@@ -218,17 +225,26 @@ namespace odysseyAnalytics.Core.Application.Session
                         logger.Error(null, ex);
                         return;
                     }
+
+                    #region CacheHandling
+
                     cacheHandler.SaveEvent("start_session", "", "-1",
                         SessionId.ToString(),
                         data);
-                    logger.Error(null,new NotConnectedToServerException("Failed to Connect to server"));
+
+                    #endregion
+
+                    logger.Error(null, new NotConnectedToServerException("Failed to Connect to server"));
                 }
             }
         }
 
         public async Task EndSessionAsync()
         {
-            Dictionary<string, string> data = new Dictionary<string, string>();
+            #region CacheHandling
+
+            // Dictionary<string, string> data = new Dictionary<string, string>();
+            // data ro nullable kardam mehdi joon
             if (!isSessionInitialized)
             {
                 try
@@ -241,6 +257,9 @@ namespace odysseyAnalytics.Core.Application.Session
                     logger.Error("An Error Happened in Cache: ", e);
                 }
             }
+
+            #endregion
+
             else
             {
                 try
@@ -264,12 +283,18 @@ namespace odysseyAnalytics.Core.Application.Session
                         logger.Error(null, ex);
                         return;
                     }
+
+                    #region CacheHandling
+
                     cacheHandler.SaveEvent("end_session", "", "-1",
                         SessionId.ToString(),
                         data);
-                    logger.Error(null,new NotConnectedToServerException("Failed to Connect to server"));
+
+                    #endregion
+                    logger.Error(null, new NotConnectedToServerException("Failed to Connect to server"));
                 }
             }
+
             cacheHandler.Close();
         }
 
