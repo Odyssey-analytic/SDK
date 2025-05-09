@@ -15,7 +15,6 @@ namespace odysseyAnalytics.Core.Application.Events
             eventTime, sessionId, clientId, priority, data, id)
         {
             this.platform = platform;
-            EventType = SESSION_START_EVENT_TYPE;
             _data["time"] = EventTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             _data["session"] = SessionId;
             _data["client"] = ClientId;

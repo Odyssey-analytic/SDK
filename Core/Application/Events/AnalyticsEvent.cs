@@ -7,13 +7,6 @@ namespace odysseyAnalytics.Core.Application.Events
     public abstract class AnalyticsEvent
     {
         protected string EventType;
-        protected const string BUSINESS_EVENT_TYPE = "BusinessEvent";
-        protected const string ERROR_EVENT_TYPE = "ErrorEvent";
-        protected const string PROGESSION_EVENT_TYPE = "ProgerssionEvent";
-        protected const string QUALITY_EVENT_TYPE = "QualityEvent";
-        protected const string RESOURCE_EVENT_TYPE = "ResourceEvent";
-        protected const string SESSION_START_EVENT_TYPE = "SessionStartEvent";
-        protected const string SESSION_END_EVENT_TYPE = "SessionEndEvent";
         
         protected Dictionary<string, string> _data;
         protected string _dataJson;
@@ -34,6 +27,7 @@ namespace odysseyAnalytics.Core.Application.Events
             Priority = priority;
             Id = id;
             _data = data ?? new Dictionary<string, string>();
+            EventType = GetType().FullName;
         }
 
 

@@ -19,7 +19,6 @@ namespace odysseyAnalytics.Core.Application.Events
             int amount, string currency) : base(queueName, eventTime,
             sessionId, clientId, priority, data, id)
         {
-            EventType = BUSINESS_EVENT_TYPE;
             this.cartType = cartType;
             this.itemType = itemType;
             this.itemId = itemId;
