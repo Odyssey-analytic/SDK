@@ -10,15 +10,12 @@ namespace odysseyAnalytics.Core.Application.Events
         private string platform;
 
         public SessionStartEvent(string queueName, DateTime eventTime, string sessionId,
-            string clientId, int priority, string platform, Dictionary<string, string> data = null, int id = -1) : base(
+            string clientId, int priority, string platform, int id = -1) : base(
             queueName,
-            eventTime, sessionId, clientId, priority, data, id)
+            eventTime, sessionId, clientId, priority, id)
         {
             this.platform = platform;
-            _data["time"] = EventTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
-            _data["session"] = SessionId;
-            _data["client"] = ClientId;
-            _data["platform"] = platform;
+            _data.Add("platform", platform);
             _dataJson = JsonConvert.SerializeObject(_data);
         }
     }

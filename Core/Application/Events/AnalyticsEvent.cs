@@ -6,19 +6,16 @@ namespace odysseyAnalytics.Core.Application.Events
 {
     public abstract class AnalyticsEvent
     {
-        protected string EventType;
-        
+        public string EventType { get; protected set; }
         protected Dictionary<string, string> _data;
         protected string _dataJson;
         private DateTime _eventTime;
         private string _sessionId;
         private string _clientId;
         public int Id { get; set; }
-        public string EventName { get; set; }
         public string QueueName { get; set; }
 
-        public AnalyticsEvent(string queueName, DateTime eventTime, string sessionId,
-            string clientId, int priority, Dictionary<string, string> data , int id = -1)
+        public AnalyticsEvent(string queueName, DateTime eventTime, string sessionId,string clientId, int priority , int id = -1)
         {
             QueueName = queueName;
             _eventTime = eventTime;
@@ -26,7 +23,10 @@ namespace odysseyAnalytics.Core.Application.Events
             _clientId = clientId;
             Priority = priority;
             Id = id;
-            _data = data ?? new Dictionary<string, string>();
+            _data = new Dictionary<string, string>();
+            _data.Add("session", sessionId);
+            _data.Add("client", clientId);
+            _data.Add("time",EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
             EventType = GetType().FullName;
         }
 

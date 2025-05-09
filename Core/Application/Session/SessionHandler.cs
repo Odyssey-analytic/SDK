@@ -12,12 +12,12 @@ namespace odysseyAnalytics.Core.Application.Session
 {
     public class SessionHandler
     {
-        public int SessionId { get; private set; }
-        public int CID { get; private set; }
+        private int SessionId { get; set; }
+        private int CID { get; set; }
 
         private string username;
         private string password;
-        private string token;
+        private readonly string token;
         private bool isSessionInitialized = false;
 
         private readonly IGatewayPort gatewayPort;
@@ -92,12 +92,7 @@ namespace odysseyAnalytics.Core.Application.Session
                             foreach (var evt in cacheEvents)
                             {
                                 logger.Log($"Found analytic cache event {evt.Id}");
-                                AnalyticsEvent analyticEvent = new AnalyticsEvent(evt.EventName,
-                                    GetQueueName(evt.EventName), evt.EventTime, evt.SessionId, CID.ToString(),
-                                    evt.Priority, evt.Data);
-                                evt.ClientId = CID.ToString();
-                                evt.QueueName = GetQueueName(evt.EventName);
-                                await messagePublisher.PublishMessage(analyticEvent);
+                                await messagePublisher.PublishMessage(evt);
                                 cacheHandler.DeleteEvent(evt.Id);
                             }
                         }
@@ -191,8 +186,9 @@ namespace odysseyAnalytics.Core.Application.Session
             {
                 try
                 {
-                    cacheHandler.SaveEvent("start_session", "", "-1", SessionId.ToString(),
-                        data);
+                    var evt = new SessionStartEvent(GetQueueName("start_session"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0, platform);
+                    cacheHandler.SaveEvent(evt);
                     logger.Log("Saved event in DB");
                 }
                 catch (Exception e)
@@ -221,9 +217,10 @@ namespace odysseyAnalytics.Core.Application.Session
 
                     #region CacheHandling
 
-                    cacheHandler.SaveEvent("start_session", "", "-1",
-                        SessionId.ToString(),
-                        data);
+                    var evt = new SessionStartEvent(GetQueueName("start_session"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0, platform);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
 
                     #endregion
 
@@ -242,8 +239,10 @@ namespace odysseyAnalytics.Core.Application.Session
             {
                 try
                 {
-                    cacheHandler.SaveEvent("end_session", "", "-1", SessionId.ToString(),
-                        data);
+                    var evt = new SessionEndEvent(GetQueueName("end_session"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 5);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
                 }
                 catch (Exception e)
                 {
@@ -258,7 +257,7 @@ namespace odysseyAnalytics.Core.Application.Session
                 try
                 {
                     var evt = new SessionEndEvent(GetQueueName("end_session"), DateTime.UtcNow,
-                        SessionId.ToString(), CID.ToString(), 0);
+                        SessionId.ToString(), CID.ToString(), 5);
 
                     await messagePublisher.PublishMessage(evt);
                 }
@@ -272,11 +271,13 @@ namespace odysseyAnalytics.Core.Application.Session
 
                     #region CacheHandling
 
-                    cacheHandler.SaveEvent("end_session", "", "-1",
-                        SessionId.ToString(),
-                        data);
+                    var evt = new SessionEndEvent(GetQueueName("end_session"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 5);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
 
                     #endregion
+
                     logger.Error(null, new NotConnectedToServerException("Failed to Connect to server"));
                 }
             }

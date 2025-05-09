@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace odysseyAnalytics.Core.Application.Events
 {
@@ -15,15 +16,22 @@ namespace odysseyAnalytics.Core.Application.Events
 
 
         public BusinessEvent(string queueName, DateTime eventTime, string sessionId, string clientId,
-            int priority, Dictionary<string, string> data, int id, string cartType, string itemType, string itemId,
+            int priority, int id, string cartType, string itemType, string itemId,
             int amount, string currency) : base(queueName, eventTime,
-            sessionId, clientId, priority, data, id)
+            sessionId, clientId, priority,  id)
         {
             this.cartType = cartType;
             this.itemType = itemType;
             this.itemId = itemId;
             this.amount = amount;
             this.currency = currency;
+            _data.Add("cartType", cartType);
+            _data.Add("itemType", itemType);
+            _data.Add("itemId", itemId);
+            _data.Add("amount", amount.ToString());
+            _data.Add("currency", currency);
+            _dataJson = JsonConvert.SerializeObject(_data);
+
         }
         
         

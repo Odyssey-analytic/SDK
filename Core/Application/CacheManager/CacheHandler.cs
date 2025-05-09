@@ -14,14 +14,9 @@ namespace odysseyAnalytics.Core.Application.CacheManager
             _databasePort = databasePort;
         }
 
-        public void SaveEvent(string name, string queueName, string clientId, string sessionId,
-            Dictionary<string, string> eventDatas)
+        public void SaveEvent(AnalyticsEvent analyticsEvent)
         {
-            int priority = name == "start_session" ? 0 : 5;
-
-            var evt = new AnalyticsEvent(name, queueName, DateTime.UtcNow, sessionId, clientId, priority, eventDatas);
-            
-            _databasePort.Write<AnalyticsEvent>(evt.Id.ToString(), evt);
+            _databasePort.Write(analyticsEvent.Id.ToString(), analyticsEvent);
         }
 
         public List<AnalyticsEvent> LoadAllEvents()
