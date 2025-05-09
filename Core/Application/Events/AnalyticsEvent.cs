@@ -4,13 +4,16 @@ using Newtonsoft.Json;
 
 namespace odysseyAnalytics.Core.Application.Events
 {
-    public class AnalyticsEvent
+    public abstract class AnalyticsEvent
     {
         private Dictionary<string, string> _data;
         private string _dataJson;
         private DateTime _eventTime;
         private string _sessionId;
         private string _clientId;
+        public int Id { get; set; }
+        public string EventName { get; set; }
+        public string QueueName { get; set; }
 
         public AnalyticsEvent(string eventName, string queueName, DateTime eventTime, string sessionId,
             string clientId, int priority, Dictionary<string, string> data , int id = -1)
@@ -31,9 +34,7 @@ namespace odysseyAnalytics.Core.Application.Events
             _dataJson = JsonConvert.SerializeObject(_data);
         }
 
-        public int Id { get; set; }
-        public string EventName { get; set; }
-        public string QueueName { get; set; }
+
         
         public DateTime EventTime
         {
@@ -108,7 +109,6 @@ namespace odysseyAnalytics.Core.Application.Events
             }
             catch (Exception ex)
             {
-                // Handle JSON parsing errors
                 throw new FormatException($"Invalid JSON format: {ex.Message}", ex);
             }
         }
