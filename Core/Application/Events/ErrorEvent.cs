@@ -17,10 +17,10 @@ namespace odysseyAnalytics.Core.Application.Events
         private SeverityLevel severity;
         private string message;
 
-        public ErrorEvent(string eventName, string queueName, DateTime eventTime, string sessionId, string clientId,
+        public ErrorEvent(string queueName, DateTime eventTime, string sessionId, string clientId,
             int priority,
-            Dictionary<string, string> data, int id, SeverityLevel severity, string message) : base(eventName,
-            queueName, eventTime, sessionId, clientId, priority, data, id)
+            Dictionary<string, string> data, int id, SeverityLevel severity, string message) : base(queueName,
+            eventTime, sessionId, clientId, priority, data, id)
         {
             EventType = ERROR_EVENT_TYPE;
             this.severity = severity;

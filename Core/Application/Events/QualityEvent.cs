@@ -8,9 +8,9 @@ namespace odysseyAnalytics.Core.Application.Events
         private float FPS;
         private float memoryUsage;
 
-        public QualityEvent(float fps, float memoryUsage, string eventName, string queueName, DateTime eventTime,
+        public QualityEvent(float fps, float memoryUsage, string queueName, DateTime eventTime,
             string sessionId, string clientId, int priority, Dictionary<string, string> data, int id = -1) : base(
-            eventName, queueName, eventTime, sessionId, clientId, priority, data, id)
+            queueName, eventTime, sessionId, clientId, priority, data, id)
         {
             EventType = QUALITY_EVENT_TYPE;
             FPS = fps;

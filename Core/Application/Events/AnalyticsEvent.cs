@@ -24,10 +24,9 @@ namespace odysseyAnalytics.Core.Application.Events
         public string EventName { get; set; }
         public string QueueName { get; set; }
 
-        public AnalyticsEvent(string eventName, string queueName, DateTime eventTime, string sessionId,
+        public AnalyticsEvent(string queueName, DateTime eventTime, string sessionId,
             string clientId, int priority, Dictionary<string, string> data , int id = -1)
         {
-            EventName = eventName;
             QueueName = queueName;
             _eventTime = eventTime;
             _sessionId = sessionId;

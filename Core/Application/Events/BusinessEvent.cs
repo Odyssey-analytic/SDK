@@ -14,9 +14,9 @@ namespace odysseyAnalytics.Core.Application.Events
         private string currency;
 
 
-        public BusinessEvent(string eventName, string queueName, DateTime eventTime, string sessionId, string clientId,
+        public BusinessEvent(string queueName, DateTime eventTime, string sessionId, string clientId,
             int priority, Dictionary<string, string> data, int id, string cartType, string itemType, string itemId,
-            int amount, string currency) : base(eventName, queueName, eventTime,
+            int amount, string currency) : base(queueName, eventTime,
             sessionId, clientId, priority, data, id)
         {
             EventType = BUSINESS_EVENT_TYPE;

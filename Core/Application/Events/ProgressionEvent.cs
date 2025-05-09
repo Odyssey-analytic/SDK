@@ -11,9 +11,9 @@ namespace odysseyAnalytics.Core.Application.Events
         private string progression03;
         private float value;
 
-        public ProgressionEvent(string eventName, string queueName, DateTime eventTime, string sessionId,
+        public ProgressionEvent(string queueName, DateTime eventTime, string sessionId,
             string clientId, int priority, Dictionary<string, string> data, int id, string progressionStatus,
-            string progression01, string progression02, string progression03, float value) : base(eventName, queueName,
+            string progression01, string progression02, string progression03, float value) : base(queueName,
             eventTime, sessionId, clientId, priority, data, id)
         {
             EventType = PROGESSION_EVENT_TYPE;
