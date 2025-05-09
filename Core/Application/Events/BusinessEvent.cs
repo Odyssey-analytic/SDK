@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace odysseyAnalytics.Core.Application.Events
 {
     public class BusinessEvent : AnalyticsEvent
     {
+        
         private string cartType;
         private string itemType;
         private string itemId;
@@ -17,6 +19,7 @@ namespace odysseyAnalytics.Core.Application.Events
             int amount, string currency) : base(eventName, queueName, eventTime,
             sessionId, clientId, priority, data, id)
         {
+            EventType = BUSINESS_EVENT_TYPE;
             this.cartType = cartType;
             this.itemType = itemType;
             this.itemId = itemId;

@@ -22,6 +22,7 @@ namespace odysseyAnalytics.Core.Application.Events
             Dictionary<string, string> data, int id, SeverityLevel severity, string message) : base(eventName,
             queueName, eventTime, sessionId, clientId, priority, data, id)
         {
+            EventType = ERROR_EVENT_TYPE;
             this.severity = severity;
             this.message = message;
         }

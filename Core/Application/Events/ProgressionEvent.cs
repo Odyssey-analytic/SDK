@@ -16,6 +16,7 @@ namespace odysseyAnalytics.Core.Application.Events
             string progression01, string progression02, string progression03, float value) : base(eventName, queueName,
             eventTime, sessionId, clientId, priority, data, id)
         {
+            EventType = PROGESSION_EVENT_TYPE;
             this.progressionStatus = progressionStatus;
             this.progression01 = progression01;
             this.progression02 = progression02;

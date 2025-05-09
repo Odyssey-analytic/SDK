@@ -16,6 +16,7 @@ namespace odysseyAnalytics.Core.Application.Events
             Dictionary<string, string> data, int id = -1) : base(eventName, queueName, eventTime, sessionId, clientId,
             priority, data, id)
         {
+            EventType = RESOURCE_EVENT_TYPE;
             this.flowType = flowType;
             this.itemType = itemType;
             this.itemId = itemId;
