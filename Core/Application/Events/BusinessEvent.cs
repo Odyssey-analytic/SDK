@@ -24,6 +24,7 @@ namespace odysseyAnalytics.Core.Application.Events
             this.itemType = itemType;
             this.itemId = itemId;
             this.amount = amount;
+            this.currency = currency;
         }
         
         
