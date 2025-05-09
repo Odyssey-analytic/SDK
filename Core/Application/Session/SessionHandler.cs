@@ -92,7 +92,9 @@ namespace odysseyAnalytics.Core.Application.Session
                             foreach (var evt in cacheEvents)
                             {
                                 logger.Log($"Found analytic cache event {evt.Id}");
-                                AnalyticsEvent analyticEvent = new AnalyticsEvent(evt.EventName,GetQueueName(evt.EventName),evt.EventTime,evt.SessionId,CID.ToString(),evt.Priority,evt.Data);
+                                AnalyticsEvent analyticEvent = new AnalyticsEvent(evt.EventName,
+                                    GetQueueName(evt.EventName), evt.EventTime, evt.SessionId, CID.ToString(),
+                                    evt.Priority, evt.Data);
                                 evt.ClientId = CID.ToString();
                                 evt.QueueName = GetQueueName(evt.EventName);
                                 await messagePublisher.PublishMessage(analyticEvent);
@@ -106,31 +108,32 @@ namespace odysseyAnalytics.Core.Application.Session
                     {
                         if (ex is OdysseyAnalyticsException)
                         {
-                            logger.Error(null,ex);
+                            logger.Error(null, ex);
                         }
 
-                        logger.Error(null,new NotConnectedToServerException("Failed to get response from server"));
+                        logger.Error(null, new NotConnectedToServerException("Failed to get response from server"));
                     }
                 }
                 else
                 {
-                    logger.Error(null,new AuthenticationException($"Authentication failed with status: {response.StatusCode}"));
+                    logger.Error(null,
+                        new AuthenticationException($"Authentication failed with status: {response.StatusCode}"));
                 }
             }
             catch (Exception ex)
             {
                 if (ex is OdysseyAnalyticsException)
                 {
-                    logger.Error(null  ,ex);
+                    logger.Error(null, ex);
                 }
 
                 if (ex.Message.Contains("No such host") || ex.Message.Contains("network") ||
                     ex.Message.Contains("connection"))
                 {
-                    logger.Error(null,new NoInternetConnectionException("Cannot connect to analytics server"));
+                    logger.Error(null, new NoInternetConnectionException("Cannot connect to analytics server"));
                 }
 
-                logger.Error(null,new NotConnectedToServerException("Failed to initialize session"));
+                logger.Error(null, new NotConnectedToServerException("Failed to initialize session"));
             }
         }
 
@@ -167,11 +170,9 @@ namespace odysseyAnalytics.Core.Application.Session
                 }
                 else
                 {
-                    logger.Error(null,new Exception("an error occurred for given queue ", e));
+                    logger.Error(null, new Exception("an error occurred for given queue ", e));
                 }
-                
             }
-
         }
 
         private void SetUserPassCidFromData(JObject data)
@@ -206,16 +207,8 @@ namespace odysseyAnalytics.Core.Application.Session
             {
                 try
                 {
-                    var evt = new AnalyticsEvent(
-                        "start_session",
-                        GetQueueName("start_session"),
-                        DateTime.UtcNow,
-                        SessionId.ToString(),
-                        CID.ToString(),
-                        0,
-                        data
-                    );
-
+                    var evt = new SessionStartEvent(GetQueueName("start_session"), DateTime.UtcNow,
+                        SessionId.ToString(), CID.ToString(), 0, platform);
                     await messagePublisher.PublishMessage(evt);
                 }
                 catch (Exception ex)
@@ -264,15 +257,8 @@ namespace odysseyAnalytics.Core.Application.Session
             {
                 try
                 {
-                    var evt = new AnalyticsEvent(
-                        "end_session",
-                        GetQueueName("end_session"),
-                        DateTime.UtcNow,
-                        SessionId.ToString(),
-                        CID.ToString(),
-                        0,
-                        data
-                    );
+                    var evt = new SessionEndEvent(GetQueueName("end_session"), DateTime.UtcNow,
+                        SessionId.ToString(), CID.ToString(), 0);
 
                     await messagePublisher.PublishMessage(evt);
                 }
@@ -302,7 +288,7 @@ namespace odysseyAnalytics.Core.Application.Session
         {
             if (!queues.TryGetValue(queueKey, out string queueName))
             {
-               logger.Error(null,new QueueNotFoundException(queueKey));
+                logger.Error(null, new QueueNotFoundException(queueKey));
             }
 
             return queueName;
