@@ -222,7 +222,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
 
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "DELETE FROM AnalyticsEvents WHERE EventKey = @EventKey";
+                    command.CommandText = "DELETE FROM AnalyticsEvents WHERE Id = @EventKey";
                     command.Parameters.AddWithValue("@EventKey", key);
                     command.ExecuteNonQuery();
                 }

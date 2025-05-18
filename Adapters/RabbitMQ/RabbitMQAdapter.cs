@@ -45,7 +45,7 @@ namespace odysseyAnalytics.Adapters.RabbitMQ
                 exchange: "",
                 routingKey: queueName,
                 body: body);
-
+            
             return await Task.FromResult(analyticsEvent);
         }
 

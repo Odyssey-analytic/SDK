@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using odysseyAnalytics.Core.Application.Events;
@@ -92,8 +93,51 @@ namespace odysseyAnalytics.Core.Application.Session
                             foreach (var evt in cacheEvents)
                             {
                                 logger.Log($"Found analytic cache event {evt.Id}");
-                                await messagePublisher.PublishMessage(evt);
-                                cacheHandler.DeleteEvent(evt.Id);
+                                try
+                                {
+                                    switch (evt.EventType.Split('.').Last())
+                                    {
+                                        case "SessionStartEvent":
+                                            evt.QueueName=GetQueueName("start_session");
+                                            break;
+
+                                        case "SessionEndEvent":
+                                            evt.QueueName=GetQueueName("end_session");
+                                            break;
+
+                                        case "ResourceEvent":
+                                            evt.QueueName=GetQueueName("resource_event");
+                                            break;
+
+                                        case "QualityEvent":
+                                            evt.QueueName=GetQueueName("quality_event");
+                                            break;
+
+                                        case "ProgressionEvent":
+                                            evt.QueueName=GetQueueName("progression_event");
+                                            break;
+                                        case "ErrorEvent":
+                                            evt.QueueName=GetQueueName("error_event");
+                                            break;
+                                        case "BusinessEvent":
+                                            evt.QueueName=GetQueueName("business_event");
+                                            break;
+                                        default:
+                                            throw new Exception("Unknown event type");
+                                    }
+                                    evt.ClientId = CID.ToString();
+                                    evt.Data["client"] = CID.ToString();
+                                    if (evt.QueueName == null)
+                                    {
+                                        throw new Exception("Unknown event type");
+                                    }
+                                    await messagePublisher.PublishMessage(evt);
+                                    cacheHandler.DeleteEvent(evt.Id);
+                                }
+                                catch
+                                {
+                                    logger.Log($"Error publishing analytic cache event {evt.Id}");
+                                }
                             }
                         }
 
@@ -190,7 +234,7 @@ namespace odysseyAnalytics.Core.Application.Session
             {
                 try
                 {
-                    var evt = new BusinessEvent(GetQueueName("start_session"), DateTime.Now, SessionId.ToString(),
+                    var evt = new BusinessEvent(GetQueueName("business_event"), DateTime.Now, SessionId.ToString(),
                         CID.ToString(), 0,-1,cartType, itemType, itemId, amount, currency);
                     cacheHandler.SaveEvent(evt);
                     logger.Log("Saved event in DB");
@@ -212,7 +256,7 @@ namespace odysseyAnalytics.Core.Application.Session
 
                     // var evt = new SessionStartEvent(GetQueueName("start_session"), DateTime.UtcNow,
                     //     SessionId.ToString(), CID.ToString(), 0, platform);
-                    var evt = new BusinessEvent(GetQueueName("start_session"), DateTime.Now, SessionId.ToString(),
+                    var evt = new BusinessEvent(GetQueueName("business_event"), DateTime.Now, SessionId.ToString(),
                         CID.ToString(), 0,-1,cartType, itemType, itemId, amount, currency);
                     cacheHandler.SaveEvent(evt);
                     logger.Log("Saved event in DB");
@@ -229,7 +273,7 @@ namespace odysseyAnalytics.Core.Application.Session
 
                     #region CacheHandling
 
-                    var evt = new BusinessEvent(GetQueueName("start_session"), DateTime.Now, SessionId.ToString(),
+                    var evt = new BusinessEvent(GetQueueName("business_event"), DateTime.Now, SessionId.ToString(),
                         CID.ToString(), 0,-1,cartType, itemType, itemId, amount, currency);
                     cacheHandler.SaveEvent(evt);
                     logger.Log("Saved event in DB");
