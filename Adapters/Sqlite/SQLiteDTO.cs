@@ -4,21 +4,17 @@ using System.Reflection;
 using Newtonsoft.Json;
 using odysseyAnalytics.Core.Application.Events;
 
-namespace odysseyAnalytics.Infrastructure.Persistence
+namespace odysseyAnalytics.Adapters.Sqlite
 {
     public class SqliteDTO
     {
         public int Id { get; set; }
+        public string EventKey { get; set; }
         public string EventType { get; set; }
-        public string QueueName { get; set; }
         public DateTime EventTime { get; set; }
-
         public string SessionId { get; set; }
-
         public string ClientId { get; set; }
-
         public int Priority { get; set; }
-
         public string DataJson { get; set; }
 
         public SqliteDTO()
@@ -28,13 +24,88 @@ namespace odysseyAnalytics.Infrastructure.Persistence
         public SqliteDTO(AnalyticsEvent analyticsEvent)
         {
             Id = analyticsEvent.Id;
+            EventKey = analyticsEvent.Id.ToString(); // Using Id as EventKey by default
             EventType = analyticsEvent.EventType;
-            QueueName = analyticsEvent.QueueName;
             EventTime = analyticsEvent.EventTime;
             SessionId = analyticsEvent.SessionId;
             ClientId = analyticsEvent.ClientId;
             Priority = analyticsEvent.Priority;
-            DataJson = analyticsEvent.GetRawDataJson();
+            
+            // Format the DataJson as required
+            FormatDataJson(analyticsEvent);
+        }
+
+        private void FormatDataJson(AnalyticsEvent analyticsEvent)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            
+            // Add the required base fields
+            data["session"] = analyticsEvent.SessionId;
+            data["client"] = analyticsEvent.ClientId;
+            data["time"] = analyticsEvent.EventTime.ToString("yyyy-MM-dd HH:mm:ss");
+            
+            // Add event-specific fields
+            if (analyticsEvent is SessionStartEvent)
+            {
+                if (analyticsEvent.Data.ContainsKey("platform"))
+                    data["platform"] = analyticsEvent.Data["platform"];
+            }
+            else if (analyticsEvent is BusinessEvent)
+            {
+                if (analyticsEvent.Data.ContainsKey("cartType"))
+                    data["cartType"] = analyticsEvent.Data["cartType"];
+                if (analyticsEvent.Data.ContainsKey("itemType"))
+                    data["itemType"] = analyticsEvent.Data["itemType"];
+                if (analyticsEvent.Data.ContainsKey("itemId"))
+                    data["itemId"] = analyticsEvent.Data["itemId"];
+                if (analyticsEvent.Data.ContainsKey("amount"))
+                    data["amount"] = analyticsEvent.Data["amount"];
+                if (analyticsEvent.Data.ContainsKey("currency"))
+                    data["currency"] = analyticsEvent.Data["currency"];
+            }
+            else if (analyticsEvent is ErrorEvent)
+            {
+                if (analyticsEvent.Data.ContainsKey("message"))
+                    data["message"] = analyticsEvent.Data["message"];
+                if (analyticsEvent.Data.ContainsKey("severity"))
+                    data["severity"] = analyticsEvent.Data["severity"];
+            }
+            else if (analyticsEvent is ProgressionEvent)
+            {
+                if (analyticsEvent.Data.ContainsKey("progressionStatus"))
+                    data["progressionStatus"] = analyticsEvent.Data["progressionStatus"];
+                if (analyticsEvent.Data.ContainsKey("progression01"))
+                    data["progression01"] = analyticsEvent.Data["progression01"];
+                if (analyticsEvent.Data.ContainsKey("progression02"))
+                    data["progression02"] = analyticsEvent.Data["progression02"];
+                if (analyticsEvent.Data.ContainsKey("progression03"))
+                    data["progression03"] = analyticsEvent.Data["progression03"];
+                if (analyticsEvent.Data.ContainsKey("value"))
+                    data["value"] = analyticsEvent.Data["value"];
+            }
+            else if (analyticsEvent is QualityEvent)
+            {
+                if (analyticsEvent.Data.ContainsKey("FPS"))
+                    data["FPS"] = analyticsEvent.Data["FPS"];
+                if (analyticsEvent.Data.ContainsKey("memoryUsage"))
+                    data["memoryUsage"] = analyticsEvent.Data["memoryUsage"];
+            }
+            else if (analyticsEvent is ResourceEvent)
+            {
+                if (analyticsEvent.Data.ContainsKey("flowType"))
+                    data["flowType"] = analyticsEvent.Data["flowType"];
+                if (analyticsEvent.Data.ContainsKey("itemType"))
+                    data["itemType"] = analyticsEvent.Data["itemType"];
+                if (analyticsEvent.Data.ContainsKey("itemId"))
+                    data["itemId"] = analyticsEvent.Data["itemId"];
+                if (analyticsEvent.Data.ContainsKey("amount"))
+                    data["amount"] = analyticsEvent.Data["amount"];
+                if (analyticsEvent.Data.ContainsKey("resourceCurrency"))
+                    data["resourceCurrency"] = analyticsEvent.Data["resourceCurrency"];
+            }
+            
+            // Set the DataJson property
+            DataJson = JsonConvert.SerializeObject(data);
         }
 
         public AnalyticsEvent ToAnalyticsEvent()
@@ -48,13 +119,12 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 }
 
                 AnalyticsEvent result = null;
+                Dictionary<string, string> data = JsonConvert.DeserializeObject<Dictionary<string, string>>(DataJson);
 
                 if (eventType == typeof(BusinessEvent))
                 {
-                    Dictionary<string, string> data =
-                        JsonConvert.DeserializeObject<Dictionary<string, string>>(DataJson);
                     result = new BusinessEvent(
-                        QueueName,
+                        "", // QueueName - will be set later if needed
                         EventTime,
                         SessionId,
                         ClientId,
@@ -69,10 +139,8 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 }
                 else if (eventType == typeof(ErrorEvent))
                 {
-                    Dictionary<string, string> data =
-                        JsonConvert.DeserializeObject<Dictionary<string, string>>(DataJson);
                     result = new ErrorEvent(
-                        QueueName,
+                        "", // QueueName - will be set later if needed
                         EventTime,
                         SessionId,
                         ClientId,
@@ -86,10 +154,8 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 }
                 else if (eventType == typeof(ProgressionEvent))
                 {
-                    Dictionary<string, string> data =
-                        JsonConvert.DeserializeObject<Dictionary<string, string>>(DataJson);
                     result = new ProgressionEvent(
-                        QueueName,
+                        "", // QueueName - will be set later if needed
                         EventTime,
                         SessionId,
                         ClientId,
@@ -104,12 +170,10 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 }
                 else if (eventType == typeof(QualityEvent))
                 {
-                    Dictionary<string, string> data =
-                        JsonConvert.DeserializeObject<Dictionary<string, string>>(DataJson);
                     result = new QualityEvent(
                         data.ContainsKey("FPS") ? float.Parse(data["FPS"]) : 0f,
                         data.ContainsKey("memoryUsage") ? float.Parse(data["memoryUsage"]) : 0f,
-                        QueueName,
+                        "", // QueueName - will be set later if needed
                         EventTime,
                         SessionId,
                         ClientId,
@@ -119,8 +183,6 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 }
                 else if (eventType == typeof(ResourceEvent))
                 {
-                    Dictionary<string, string> data =
-                        JsonConvert.DeserializeObject<Dictionary<string, string>>(DataJson);
                     result = new ResourceEvent(
                         data.ContainsKey("flowType") ? data["flowType"] : "",
                         data.ContainsKey("itemType") ? data["itemType"] : "",
@@ -128,7 +190,7 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                         data.ContainsKey("amount") ? int.Parse(data["amount"]) : 0,
                         data.ContainsKey("resourceCurrency") ? data["resourceCurrency"] : "",
                         "", // eventName is not stored in _data
-                        QueueName,
+                        "", // QueueName - will be set later if needed
                         EventTime,
                         SessionId,
                         ClientId,
@@ -139,7 +201,7 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 else if (eventType == typeof(SessionEndEvent))
                 {
                     result = new SessionEndEvent(
-                        QueueName,
+                        "", // QueueName - will be set later if needed
                         EventTime,
                         SessionId,
                         ClientId,
@@ -149,10 +211,8 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 }
                 else if (eventType == typeof(SessionStartEvent))
                 {
-                    Dictionary<string, string> data =
-                        JsonConvert.DeserializeObject<Dictionary<string, string>>(DataJson);
                     result = new SessionStartEvent(
-                        QueueName,
+                        "", // QueueName - will be set later if needed
                         EventTime,
                         SessionId,
                         ClientId,
@@ -174,9 +234,6 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                             {
                                 object[] paramValues = new object[parameters.Length];
 
-                                Dictionary<string, string> data =
-                                    JsonConvert.DeserializeObject<Dictionary<string, string>>(DataJson);
-
                                 // Attempt to populate parameters
                                 bool canUseConstructor = true;
                                 for (int i = 0; i < parameters.Length; i++)
@@ -185,7 +242,7 @@ namespace odysseyAnalytics.Infrastructure.Persistence
 
                                     // Check for specific standard parameters
                                     if (param.Name == "queueName")
-                                        paramValues[i] = QueueName;
+                                        paramValues[i] = ""; // Will be set later if needed
                                     else if (param.Name == "eventTime")
                                         paramValues[i] = EventTime;
                                     else if (param.Name == "sessionId")
@@ -223,7 +280,6 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                                             {
                                                 // Conversion failed
                                                 canUseConstructor = false;
-
                                                 break;
                                             }
                                         }
@@ -265,7 +321,8 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 }
 
                 // Ensure the data is correctly set
-                result.SetRawDataJson(DataJson);
+                if (!string.IsNullOrEmpty(DataJson))
+                    result.SetRawDataJson(DataJson);
 
                 return result;
             }
