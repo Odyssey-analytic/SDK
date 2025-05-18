@@ -4,13 +4,14 @@ using System.Reflection;
 using Newtonsoft.Json;
 using odysseyAnalytics.Core.Application.Events;
 
-namespace odysseyAnalytics.Adapters.Sqlite
+namespace odysseyAnalytics.Infrastructure.Persistence
 {
     public class SqliteDTO
     {
         public int Id { get; set; }
         public string EventKey { get; set; }
         public string EventType { get; set; }
+        public string QueueName { get; set; }
         public DateTime EventTime { get; set; }
         public string SessionId { get; set; }
         public string ClientId { get; set; }
@@ -26,6 +27,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
             Id = analyticsEvent.Id;
             EventKey = analyticsEvent.Id.ToString(); // Using Id as EventKey by default
             EventType = analyticsEvent.EventType;
+            QueueName = analyticsEvent.QueueName;
             EventTime = analyticsEvent.EventTime;
             SessionId = analyticsEvent.SessionId;
             ClientId = analyticsEvent.ClientId;
@@ -201,7 +203,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
                 else if (eventType == typeof(SessionEndEvent))
                 {
                     result = new SessionEndEvent(
-                        "", // QueueName - will be set later if needed
+                        QueueName,
                         EventTime,
                         SessionId,
                         ClientId,
@@ -242,7 +244,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
 
                                     // Check for specific standard parameters
                                     if (param.Name == "queueName")
-                                        paramValues[i] = ""; // Will be set later if needed
+                                        paramValues[i] = QueueName;
                                     else if (param.Name == "eventTime")
                                         paramValues[i] = EventTime;
                                     else if (param.Name == "sessionId")
