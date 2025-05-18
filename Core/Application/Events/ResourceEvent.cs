@@ -13,7 +13,7 @@ namespace odysseyAnalytics.Core.Application.Events
         private string resourceCurrency;
 
         public ResourceEvent(string flowType, string itemType, string itemId, int amount, string resourceCurrency,
-            string eventName, string queueName, DateTime eventTime, string sessionId, string clientId, int priority,
+            string queueName, DateTime eventTime, string sessionId, string clientId, int priority,
             int id = -1) : base(queueName, eventTime, sessionId, clientId,
             priority, id)
         {

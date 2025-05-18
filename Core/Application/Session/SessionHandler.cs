@@ -284,8 +284,240 @@ namespace odysseyAnalytics.Core.Application.Session
                 }
             }
         }
+        public async Task SendErrorEventAsync(SeverityLevel severityLevel, string message)
+        {
+            #region SavingIntoCache
 
+            // mehid joon data ro nullable kardam
+            if (!isSessionInitialized)
+            {
+                try
+                {
+                    var evt = new ErrorEvent(GetQueueName("error_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,severityLevel, message);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(null, e);
+                }
+            }
 
+            #endregion
+
+            else
+            {
+                try
+                {
+
+                    #region MUSTBEDEBUGGED
+                    var evt = new ErrorEvent(GetQueueName("error_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,severityLevel, message);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                    logger.Log("Saved event in DB");
+                    await messagePublisher.PublishMessage(evt);
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    if (ex is QueueNotFoundException)
+                    {
+                        logger.Error(null, ex);
+                        return;
+                    }
+
+                    #region CacheHandling
+
+                    var evt = new ErrorEvent(GetQueueName("error_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,severityLevel, message);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+
+                    #endregion
+
+                    logger.Error(null, new NotConnectedToServerException("Failed to Connect to server"));
+                }
+            }
+        }
+        public async Task SendProgressionEventAsync(string progressionStatus,string progression01, string progression02, string progression03, float value)
+        {
+            #region SavingIntoCache
+
+            // mehid joon data ro nullable kardam
+            if (!isSessionInitialized)
+            {
+                try
+                {
+                    var evt = new ProgressionEvent(GetQueueName("progression_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,progressionStatus, progression01, progression02, progression03, value);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(null, e);
+                }
+            }
+
+            #endregion
+
+            else
+            {
+                try
+                {
+
+                    #region MUSTBEDEBUGGED
+
+                    // var evt = new SessionStartEvent(GetQueueName("start_session"), DateTime.UtcNow,
+                    //     SessionId.ToString(), CID.ToString(), 0, platform);
+                    var evt = new ProgressionEvent(GetQueueName("progression_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,progressionStatus, progression01, progression02, progression03, value);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                    await messagePublisher.PublishMessage(evt);
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    if (ex is QueueNotFoundException)
+                    {
+                        logger.Error(null, ex);
+                        return;
+                    }
+
+                    #region CacheHandling
+
+                    var evt = new ProgressionEvent(GetQueueName("progression_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,progressionStatus, progression01, progression02, progression03, value);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+
+                    #endregion
+
+                    logger.Error(null, new NotConnectedToServerException("Failed to Connect to server"));
+                }
+            }
+        }
+        public async Task SendQualityEventAsync(float fps, float memoryUsage)
+        {
+            #region SavingIntoCache
+
+            // mehid joon data ro nullable kardam
+            if (!isSessionInitialized)
+            {
+                try
+                {
+                    var evt = new QualityEvent(fps,memoryUsage,GetQueueName("quality_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(null, e);
+                }
+            }
+
+            #endregion
+
+            else
+            {
+                try
+                {
+
+                    #region MUSTBEDEBUGGED
+
+                    // var evt = new SessionStartEvent(GetQueueName("start_session"), DateTime.UtcNow,
+                    //     SessionId.ToString(), CID.ToString(), 0, platform);
+                    var evt = new QualityEvent(fps,memoryUsage,GetQueueName("quality_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                    await messagePublisher.PublishMessage(evt);
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    if (ex is QueueNotFoundException)
+                    {
+                        logger.Error(null, ex);
+                        return;
+                    }
+
+                    #region CacheHandling
+
+                    var evt = new QualityEvent(fps,memoryUsage,GetQueueName("quality_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+
+                    #endregion
+
+                    logger.Error(null, new NotConnectedToServerException("Failed to Connect to server"));
+                }
+            }
+        }
+        public async Task SendResourceEventAsync(string flowType, string itemType, string itemId, int amount, string resourceCurrency)
+        {
+            #region SavingIntoCache
+
+            // mehid joon data ro nullable kardam
+            if (!isSessionInitialized)
+            {
+                try
+                {
+                    var evt = new ResourceEvent(flowType,itemType,itemId,amount,resourceCurrency,GetQueueName("resource_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(null, e);
+                }
+            }
+
+            #endregion
+
+            else
+            {
+                try
+                {
+
+                    #region MUSTBEDEBUGGED
+
+                    // var evt = new SessionStartEvent(GetQueueName("start_session"), DateTime.UtcNow,
+                    //     SessionId.ToString(), CID.ToString(), 0, platform);
+                    var evt = new ResourceEvent(flowType,itemType,itemId,amount,resourceCurrency,GetQueueName("resource_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                    await messagePublisher.PublishMessage(evt);
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    if (ex is QueueNotFoundException)
+                    {
+                        logger.Error(null, ex);
+                        return;
+                    }
+
+                    #region CacheHandling
+
+                    var evt = new ResourceEvent(flowType,itemType,itemId,amount,resourceCurrency,GetQueueName("resource_event"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+
+                    #endregion
+
+                    logger.Error(null, new NotConnectedToServerException("Failed to Connect to server"));
+                }
+            }
+        }
         public async Task StartSessionAsync(string platform)
         {
             #region SavingIntoCache

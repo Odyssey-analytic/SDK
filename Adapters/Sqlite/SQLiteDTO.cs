@@ -189,7 +189,6 @@ namespace odysseyAnalytics.Adapters.Sqlite
                         data.ContainsKey("itemId") ? data["itemId"] : "",
                         data.ContainsKey("amount") ? int.Parse(data["amount"]) : 0,
                         data.ContainsKey("resourceCurrency") ? data["resourceCurrency"] : "",
-                        "", // eventName is not stored in _data
                         "", // QueueName - will be set later if needed
                         EventTime,
                         SessionId,
