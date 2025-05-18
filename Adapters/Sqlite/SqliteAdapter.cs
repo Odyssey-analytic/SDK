@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using odysseyAnalytics.Core.Application.Events;
+using odysseyAnalytics.Core.Ports;
+using System.Data.SQLite;
 using System.IO;
 using Microsoft.Data.Sqlite;
-using odysseyAnalytics.Core.Application.Events;
 
-namespace odysseyAnalytics.Infrastructure.Persistence
+namespace odysseyAnalytics.Adapters.Sqlite
 {
-    public class SqliteAnalyticsRepository
+    public class SqliteAdapter : IDatabasePort
     {
         private readonly string _connectionString;
 
-        public SqliteAnalyticsRepository(string dbPath)
+        public SqliteAdapter(string dbPath)
         {
             // Create directory if it doesn't exist
             string directory = Path.GetDirectoryName(dbPath);
@@ -40,8 +43,8 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                     command.CommandText = @"
                         CREATE TABLE IF NOT EXISTS AnalyticsEvents (
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            EventKey TEXT NOT NULL,
                             EventType TEXT NOT NULL,
-                            QueueName TEXT NOT NULL,
                             EventTime TEXT NOT NULL,
                             SessionId TEXT NOT NULL,
                             ClientId TEXT NOT NULL,
@@ -54,187 +57,9 @@ namespace odysseyAnalytics.Infrastructure.Persistence
             }
         }
 
-        public void SaveEvent(AnalyticsEvent analyticsEvent)
+        public IEnumerable<T> ReadAll<T>() where T : AnalyticsEvent
         {
-            var dto = new SqliteDTO(analyticsEvent);
-
-            using (var connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                using (var command = connection.CreateCommand())
-                {
-                    if (dto.Id <= 0)
-                    {
-                        // Insert new record
-                        command.CommandText = @"
-                            INSERT INTO AnalyticsEvents 
-                            (EventType, QueueName, EventTime, SessionId, ClientId, Priority, DataJson)
-                            VALUES 
-                            (@EventType, @QueueName, @EventTime, @SessionId, @ClientId, @Priority, @DataJson);
-                            SELECT last_insert_rowid();";
-
-                        command.Parameters.AddWithValue("@EventType", dto.EventType);
-                        command.Parameters.AddWithValue("@QueueName", dto.QueueName);
-                        command.Parameters.AddWithValue("@EventTime", dto.EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                        command.Parameters.AddWithValue("@SessionId", dto.SessionId);
-                        command.Parameters.AddWithValue("@ClientId", dto.ClientId);
-                        command.Parameters.AddWithValue("@Priority", dto.Priority);
-                        command.Parameters.AddWithValue("@DataJson", dto.DataJson);
-
-                        // Get the auto-generated ID
-                        long newId = Convert.ToInt64(command.ExecuteScalar());
-                        analyticsEvent.Id = (int)newId;
-                    }
-                    else
-                    {
-                        // Update existing record
-                        command.CommandText = @"
-                            UPDATE AnalyticsEvents 
-                            SET EventType = @EventType, 
-                                QueueName = @QueueName, 
-                                EventTime = @EventTime, 
-                                SessionId = @SessionId, 
-                                ClientId = @ClientId, 
-                                Priority = @Priority, 
-                                DataJson = @DataJson
-                            WHERE Id = @Id";
-
-                        command.Parameters.AddWithValue("@Id", dto.Id);
-                        command.Parameters.AddWithValue("@EventType", dto.EventType);
-                        command.Parameters.AddWithValue("@QueueName", dto.QueueName);
-                        command.Parameters.AddWithValue("@EventTime", dto.EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                        command.Parameters.AddWithValue("@SessionId", dto.SessionId);
-                        command.Parameters.AddWithValue("@ClientId", dto.ClientId);
-                        command.Parameters.AddWithValue("@Priority", dto.Priority);
-                        command.Parameters.AddWithValue("@DataJson", dto.DataJson);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-        }
-
-        public void SaveEvents(IEnumerable<AnalyticsEvent> events)
-        {
-            using (var connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                using (var transaction = connection.BeginTransaction())
-                {
-                    try
-                    {
-                        foreach (var analyticsEvent in events)
-                        {
-                            var dto = new SqliteDTO(analyticsEvent);
-
-                            using (var command = connection.CreateCommand())
-                            {
-                                command.Transaction = transaction;
-
-                                if (dto.Id <= 0)
-                                {
-                                    // Insert new record
-                                    command.CommandText = @"
-                                        INSERT INTO AnalyticsEvents 
-                                        (EventType, QueueName, EventTime, SessionId, ClientId, Priority, DataJson)
-                                        VALUES 
-                                        (@EventType, @QueueName, @EventTime, @SessionId, @ClientId, @Priority, @DataJson);
-                                        SELECT last_insert_rowid();";
-
-                                    command.Parameters.AddWithValue("@EventType", dto.EventType);
-                                    command.Parameters.AddWithValue("@QueueName", dto.QueueName);
-                                    command.Parameters.AddWithValue("@EventTime",
-                                        dto.EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                                    command.Parameters.AddWithValue("@SessionId", dto.SessionId);
-                                    command.Parameters.AddWithValue("@ClientId", dto.ClientId);
-                                    command.Parameters.AddWithValue("@Priority", dto.Priority);
-                                    command.Parameters.AddWithValue("@DataJson", dto.DataJson);
-
-                                    // Get the auto-generated ID
-                                    long newId = Convert.ToInt64(command.ExecuteScalar());
-                                    analyticsEvent.Id = (int)newId;
-                                }
-                                else
-                                {
-                                    // Update existing record
-                                    command.CommandText = @"
-                                        UPDATE AnalyticsEvents 
-                                        SET EventType = @EventType, 
-                                            QueueName = @QueueName, 
-                                            EventTime = @EventTime, 
-                                            SessionId = @SessionId, 
-                                            ClientId = @ClientId, 
-                                            Priority = @Priority, 
-                                            DataJson = @DataJson
-                                        WHERE Id = @Id";
-
-                                    command.Parameters.AddWithValue("@Id", dto.Id);
-                                    command.Parameters.AddWithValue("@EventType", dto.EventType);
-                                    command.Parameters.AddWithValue("@QueueName", dto.QueueName);
-                                    command.Parameters.AddWithValue("@EventTime",
-                                        dto.EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                                    command.Parameters.AddWithValue("@SessionId", dto.SessionId);
-                                    command.Parameters.AddWithValue("@ClientId", dto.ClientId);
-                                    command.Parameters.AddWithValue("@Priority", dto.Priority);
-                                    command.Parameters.AddWithValue("@DataJson", dto.DataJson);
-
-                                    command.ExecuteNonQuery();
-                                }
-                            }
-                        }
-
-                        transaction.Commit();
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
-                }
-            }
-        }
-
-        public AnalyticsEvent GetEventById(int id)
-        {
-            using (var connection = new SqliteConnection(_connectionString))
-            {
-                connection.Open();
-
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "SELECT * FROM AnalyticsEvents WHERE Id = @Id";
-                    command.Parameters.AddWithValue("@Id", id);
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            var dto = new SqliteDTO
-                            {
-                                Id = reader.GetInt32(0),
-                                EventType = reader.GetString(1),
-                                QueueName = reader.GetString(2),
-                                EventTime = DateTime.Parse(reader.GetString(3)),
-                                SessionId = reader.GetString(4),
-                                ClientId = reader.GetString(5),
-                                Priority = reader.GetInt32(6),
-                                DataJson = reader.GetString(7)
-                            };
-
-                            return dto.ToAnalyticsEvent();
-                        }
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        public List<AnalyticsEvent> GetAllEvents()
-        {
-            var events = new List<AnalyticsEvent>();
+            var events = new List<T>();
 
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -253,8 +78,8 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                                 var dto = new SqliteDTO
                                 {
                                     Id = reader.GetInt32(0),
-                                    EventType = reader.GetString(1),
-                                    QueueName = reader.GetString(2),
+                                    EventKey = reader.GetString(1),
+                                    EventType = reader.GetString(2),
                                     EventTime = DateTime.Parse(reader.GetString(3)),
                                     SessionId = reader.GetString(4),
                                     ClientId = reader.GetString(5),
@@ -262,11 +87,14 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                                     DataJson = reader.GetString(7)
                                 };
 
-                                events.Add(dto.ToAnalyticsEvent());
+                                var analyticsEvent = dto.ToAnalyticsEvent();
+                                if (analyticsEvent is T typedEvent)
+                                {
+                                    events.Add(typedEvent);
+                                }
                             }
                             catch (Exception ex)
                             {
-                                // Log error and continue
                                 Console.WriteLine($"Error converting event: {ex.Message}");
                             }
                         }
@@ -277,31 +105,28 @@ namespace odysseyAnalytics.Infrastructure.Persistence
             return events;
         }
 
-        public List<AnalyticsEvent> GetEventsBySession(string sessionId)
+        public T Read<T>(string key) where T : AnalyticsEvent
         {
-            var events = new List<AnalyticsEvent>();
-
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
 
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText =
-                        "SELECT * FROM AnalyticsEvents WHERE SessionId = @SessionId ORDER BY EventTime";
-                    command.Parameters.AddWithValue("@SessionId", sessionId);
+                    command.CommandText = "SELECT * FROM AnalyticsEvents WHERE EventKey = @EventKey";
+                    command.Parameters.AddWithValue("@EventKey", key);
 
                     using (var reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader.Read())
                         {
                             try
                             {
                                 var dto = new SqliteDTO
                                 {
                                     Id = reader.GetInt32(0),
-                                    EventType = reader.GetString(1),
-                                    QueueName = reader.GetString(2),
+                                    EventKey = reader.GetString(1),
+                                    EventType = reader.GetString(2),
                                     EventTime = DateTime.Parse(reader.GetString(3)),
                                     SessionId = reader.GetString(4),
                                     ClientId = reader.GetString(5),
@@ -309,11 +134,14 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                                     DataJson = reader.GetString(7)
                                 };
 
-                                events.Add(dto.ToAnalyticsEvent());
+                                var analyticsEvent = dto.ToAnalyticsEvent();
+                                if (analyticsEvent is T typedEvent)
+                                {
+                                    return typedEvent;
+                                }
                             }
                             catch (Exception ex)
                             {
-                                // Log error and continue
                                 Console.WriteLine($"Error converting event: {ex.Message}");
                             }
                         }
@@ -321,12 +149,13 @@ namespace odysseyAnalytics.Infrastructure.Persistence
                 }
             }
 
-            return events;
+            return null;
         }
 
-        public List<AnalyticsEvent> GetEventsByType(string eventType)
+        public void Write<T>(string key, T value) where T : AnalyticsEvent
         {
-            var events = new List<AnalyticsEvent>();
+            var dto = new SqliteDTO(value);
+            dto.EventKey = key; // Use the provided key
 
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -334,41 +163,85 @@ namespace odysseyAnalytics.Infrastructure.Persistence
 
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText =
-                        "SELECT * FROM AnalyticsEvents WHERE EventType = @EventType ORDER BY EventTime";
-                    command.Parameters.AddWithValue("@EventType", eventType);
-
-                    using (var reader = command.ExecuteReader())
+                    if (dto.Id <= 0)
                     {
-                        while (reader.Read())
-                        {
-                            try
-                            {
-                                var dto = new SqliteDTO
-                                {
-                                    Id = reader.GetInt32(0),
-                                    EventType = reader.GetString(1),
-                                    QueueName = reader.GetString(2),
-                                    EventTime = DateTime.Parse(reader.GetString(3)),
-                                    SessionId = reader.GetString(4),
-                                    ClientId = reader.GetString(5),
-                                    Priority = reader.GetInt32(6),
-                                    DataJson = reader.GetString(7)
-                                };
+                        // Insert new record
+                        command.CommandText = @"
+                            INSERT INTO AnalyticsEvents 
+                            (EventKey, EventType, EventTime, SessionId, ClientId, Priority, DataJson)
+                            VALUES 
+                            (@EventKey, @EventType, @EventTime, @SessionId, @ClientId, @Priority, @DataJson);
+                            SELECT last_insert_rowid();";
 
-                                events.Add(dto.ToAnalyticsEvent());
-                            }
-                            catch (Exception ex)
-                            {
-                                // Log error and continue
-                                Console.WriteLine($"Error converting event: {ex.Message}");
-                            }
-                        }
+                        command.Parameters.AddWithValue("@EventKey", dto.EventKey);
+                        command.Parameters.AddWithValue("@EventType", dto.EventType);
+                        command.Parameters.AddWithValue("@EventTime", dto.EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                        command.Parameters.AddWithValue("@SessionId", dto.SessionId);
+                        command.Parameters.AddWithValue("@ClientId", dto.ClientId);
+                        command.Parameters.AddWithValue("@Priority", dto.Priority);
+                        command.Parameters.AddWithValue("@DataJson", dto.DataJson);
+
+                        // Get the auto-generated ID
+                        long newId = Convert.ToInt64(command.ExecuteScalar());
+                        value.Id = (int)newId;
+                    }
+                    else
+                    {
+                        // Update existing record
+                        command.CommandText = @"
+                            UPDATE AnalyticsEvents 
+                            SET EventKey = @EventKey,
+                                EventType = @EventType,
+                                EventTime = @EventTime, 
+                                SessionId = @SessionId, 
+                                ClientId = @ClientId, 
+                                Priority = @Priority, 
+                                DataJson = @DataJson
+                            WHERE Id = @Id";
+
+                        command.Parameters.AddWithValue("@Id", dto.Id);
+                        command.Parameters.AddWithValue("@EventKey", dto.EventKey);
+                        command.Parameters.AddWithValue("@EventType", dto.EventType);
+                        command.Parameters.AddWithValue("@EventTime", dto.EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                        command.Parameters.AddWithValue("@SessionId", dto.SessionId);
+                        command.Parameters.AddWithValue("@ClientId", dto.ClientId);
+                        command.Parameters.AddWithValue("@Priority", dto.Priority);
+                        command.Parameters.AddWithValue("@DataJson", dto.DataJson);
+
+                        command.ExecuteNonQuery();
                     }
                 }
             }
+        }
 
-            return events;
+        public void Delete<T>(string key) where T : AnalyticsEvent
+        {
+            using (var connection = new SqliteConnection(_connectionString))
+            {
+                connection.Open();
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "DELETE FROM AnalyticsEvents WHERE EventKey = @EventKey";
+                    command.Parameters.AddWithValue("@EventKey", key);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Update<T>(string key, T value) where T : AnalyticsEvent
+        {
+            Write(key, value);
+        }
+
+        public IEnumerable<T> ReadWhere<T>(Func<T, bool> predicate) where T : AnalyticsEvent
+        {
+            return ReadAll<T>().Where(predicate);
+        }
+
+        public void Close()
+        {
+            // No specific cleanup needed for SQLite connections in this implementation
         }
     }
 }
