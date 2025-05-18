@@ -177,6 +177,71 @@ namespace odysseyAnalytics.Core.Application.Session
             password = data["rb_password"]?.ToString();
         }
 
+        public async Task SendBusinessEventAsync(string cartType,
+            string itemType,
+            string itemId,
+            int amount,
+            string currency)
+        {
+            #region SavingIntoCache
+
+            // mehid joon data ro nullable kardam
+            if (!isSessionInitialized)
+            {
+                try
+                {
+                    var evt = new BusinessEvent(GetQueueName("start_session"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,cartType, itemType, itemId, amount, currency);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(null, e);
+                }
+            }
+
+            #endregion
+
+            else
+            {
+                try
+                {
+
+                    #region MUSTBEDEBUGGED
+
+                    // var evt = new SessionStartEvent(GetQueueName("start_session"), DateTime.UtcNow,
+                    //     SessionId.ToString(), CID.ToString(), 0, platform);
+                    var evt = new BusinessEvent(GetQueueName("start_session"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,cartType, itemType, itemId, amount, currency);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+                    await messagePublisher.PublishMessage(evt);
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    if (ex is QueueNotFoundException)
+                    {
+                        logger.Error(null, ex);
+                        return;
+                    }
+
+                    #region CacheHandling
+
+                    var evt = new BusinessEvent(GetQueueName("start_session"), DateTime.Now, SessionId.ToString(),
+                        CID.ToString(), 0,-1,cartType, itemType, itemId, amount, currency);
+                    cacheHandler.SaveEvent(evt);
+                    logger.Log("Saved event in DB");
+
+                    #endregion
+
+                    logger.Error(null, new NotConnectedToServerException("Failed to Connect to server"));
+                }
+            }
+        }
+
+
         public async Task StartSessionAsync(string platform)
         {
             #region SavingIntoCache
