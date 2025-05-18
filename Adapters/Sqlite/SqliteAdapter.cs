@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using odysseyAnalytics.Core.Application.Events;
 using odysseyAnalytics.Core.Ports;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 using System.IO;
+using Microsoft.Data.Sqlite;
 
 namespace odysseyAnalytics.Adapters.Sqlite
 {
@@ -44,7 +45,6 @@ namespace odysseyAnalytics.Adapters.Sqlite
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
                             EventKey TEXT NOT NULL,
                             EventType TEXT NOT NULL,
-                            QueueName TEXT NOT NULL,
                             EventTime TEXT NOT NULL,
                             SessionId TEXT NOT NULL,
                             ClientId TEXT NOT NULL,
@@ -75,17 +75,16 @@ namespace odysseyAnalytics.Adapters.Sqlite
                         {
                             try
                             {
-                                var dto = new Infrastructure.Persistence.SqliteDTO
+                                var dto = new SqliteDTO
                                 {
                                     Id = reader.GetInt32(0),
                                     EventKey = reader.GetString(1),
                                     EventType = reader.GetString(2),
-                                    QueueName = reader.GetString(3),
-                                    EventTime = DateTime.Parse(reader.GetString(4)),
-                                    SessionId = reader.GetString(5),
-                                    ClientId = reader.GetString(6),
-                                    Priority = reader.GetInt32(7),
-                                    DataJson = reader.GetString(8)
+                                    EventTime = DateTime.Parse(reader.GetString(3)),
+                                    SessionId = reader.GetString(4),
+                                    ClientId = reader.GetString(5),
+                                    Priority = reader.GetInt32(6),
+                                    DataJson = reader.GetString(7)
                                 };
 
                                 var analyticsEvent = dto.ToAnalyticsEvent();
@@ -123,7 +122,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
                         {
                             try
                             {
-                                var dto = new Infrastructure.Persistence.SqliteDTO
+                                var dto = new SqliteDTO
                                 {
                                     Id = reader.GetInt32(0),
                                     EventKey = reader.GetString(1),
@@ -155,7 +154,7 @@ namespace odysseyAnalytics.Adapters.Sqlite
 
         public void Write<T>(string key, T value) where T : AnalyticsEvent
         {
-            var dto = new Infrastructure.Persistence.SqliteDTO(value);
+            var dto = new SqliteDTO(value);
             dto.EventKey = key; // Use the provided key
 
             using (var connection = new SqliteConnection(_connectionString))
@@ -169,14 +168,13 @@ namespace odysseyAnalytics.Adapters.Sqlite
                         // Insert new record
                         command.CommandText = @"
                             INSERT INTO AnalyticsEvents 
-                            (EventKey, EventType, QueueName, EventTime, SessionId, ClientId, Priority, DataJson)
+                            (EventKey, EventType, EventTime, SessionId, ClientId, Priority, DataJson)
                             VALUES 
-                            (@EventKey, @EventType, @QueueName, @EventTime, @SessionId, @ClientId, @Priority, @DataJson);
+                            (@EventKey, @EventType, @EventTime, @SessionId, @ClientId, @Priority, @DataJson);
                             SELECT last_insert_rowid();";
 
                         command.Parameters.AddWithValue("@EventKey", dto.EventKey);
                         command.Parameters.AddWithValue("@EventType", dto.EventType);
-                        command.Parameters.AddWithValue("@QueueName", dto.QueueName);
                         command.Parameters.AddWithValue("@EventTime", dto.EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
                         command.Parameters.AddWithValue("@SessionId", dto.SessionId);
                         command.Parameters.AddWithValue("@ClientId", dto.ClientId);
@@ -194,7 +192,6 @@ namespace odysseyAnalytics.Adapters.Sqlite
                             UPDATE AnalyticsEvents 
                             SET EventKey = @EventKey,
                                 EventType = @EventType,
-                                QueueName = @QueueName,
                                 EventTime = @EventTime, 
                                 SessionId = @SessionId, 
                                 ClientId = @ClientId, 
@@ -205,7 +202,6 @@ namespace odysseyAnalytics.Adapters.Sqlite
                         command.Parameters.AddWithValue("@Id", dto.Id);
                         command.Parameters.AddWithValue("@EventKey", dto.EventKey);
                         command.Parameters.AddWithValue("@EventType", dto.EventType);
-                        command.Parameters.AddWithValue("@QueueName", dto.QueueName);
                         command.Parameters.AddWithValue("@EventTime", dto.EventTime.ToString("yyyy-MM-dd HH:mm:ss"));
                         command.Parameters.AddWithValue("@SessionId", dto.SessionId);
                         command.Parameters.AddWithValue("@ClientId", dto.ClientId);
