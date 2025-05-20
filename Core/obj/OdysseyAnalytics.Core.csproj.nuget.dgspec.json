@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Repositories\\SDK\\Core\\OdysseyAnalytics.Core.csproj": {}
+    "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj": {}
   },
   "projects": {
-    "E:\\Repositories\\SDK\\Core\\OdysseyAnalytics.Core.csproj": {
+    "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Repositories\\SDK\\Core\\OdysseyAnalytics.Core.csproj",
+        "projectUniqueName": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj",
         "projectName": "odysseyAnalytics.Core",
-        "projectPath": "E:\\Repositories\\SDK\\Core\\OdysseyAnalytics.Core.csproj",
+        "projectPath": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj",
         "packagesPath": "C:\\Users\\Armageddon\\.nuget\\packages\\",
         "outputPath": "E:\\Repositories\\SDK\\Core\\obj\\",
         "projectStyle": "PackageReference",

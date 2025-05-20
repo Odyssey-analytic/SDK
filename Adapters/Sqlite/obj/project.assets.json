@@ -849,7 +849,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "E:\\Repositories\\SDK\\Adapters\\Sqlite\\odysseyAnalytics.Adapters.Sqlite.csproj",
-      "projectName": "odysseyAnalytics.Adapters.Sqlite",
+      "projectName": "odysseyAnalytics.Adapter.Sqlite",
       "projectPath": "E:\\Repositories\\SDK\\Adapters\\Sqlite\\odysseyAnalytics.Adapters.Sqlite.csproj",
       "packagesPath": "C:\\Users\\Armageddon\\.nuget\\packages\\",
       "outputPath": "E:\\Repositories\\SDK\\Adapters\\Sqlite\\obj\\",

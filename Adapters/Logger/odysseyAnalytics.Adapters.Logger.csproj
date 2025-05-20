@@ -3,6 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>odysseyAnalytics.Adapters.Logger</RootNamespace>
+    <PackageId>odysseyAnalytics.Adapter.Logger</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>OdysseyAnalytics</Authors>
+    <Description>Logger adapter for OdysseyAnalytics</Description>
+    <PackageProjectUrl>https://github.com/Odyssey-analytic/SDK</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Odyssey-analytic/SDK</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

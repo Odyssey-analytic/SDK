@@ -4,8 +4,9 @@
     <id>odysseyAnalytics.Core</id>
     <version>1.0.0</version>
     <authors>OdysseyAnalytics</authors>
+    <projectUrl>https://github.com/Odyssey-analytic/SDK</projectUrl>
     <description>Core analytics SDK with clean architecture separation</description>
-    <repository type="git" commit="25fdc5d73be10df5b3025f135f148f9ed1de6c4d" />
+    <repository type="git" url="https://github.com/Odyssey-analytic/SDK" commit="794ad9b924664de57e4d457132f6505f2b596195" />
     <dependencies>
       <group targetFramework=".NETStandard2.0">
         <dependency id="Newtonsoft.Json" version="13.0.3" exclude="Build,Analyzers" />

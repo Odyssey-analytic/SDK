@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5vXMLY0YNo4=",
+  "dgSpecHash": "phVDysooYZo=",
   "success": true,
-  "projectFilePath": "E:\\Repositories\\SDK\\Core\\OdysseyAnalytics.Core.csproj",
+  "projectFilePath": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Armageddon\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Armageddon\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",

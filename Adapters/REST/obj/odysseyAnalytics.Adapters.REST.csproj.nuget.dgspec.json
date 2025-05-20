@@ -8,7 +8,7 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "E:\\Repositories\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
-        "projectName": "odysseyAnalytics.Adapters.REST",
+        "projectName": "odysseyAnalytics.Adapter.REST",
         "projectPath": "E:\\Repositories\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
         "packagesPath": "C:\\Users\\Armageddon\\.nuget\\packages\\",
         "outputPath": "E:\\Repositories\\SDK\\Adapters\\REST\\obj\\",

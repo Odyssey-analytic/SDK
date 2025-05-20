@@ -248,7 +248,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "E:\\Repositories\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj",
-      "projectName": "odysseyAnalytics.Adapters.Logger",
+      "projectName": "odysseyAnalytics.Adapter.Logger",
       "projectPath": "E:\\Repositories\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj",
       "packagesPath": "C:\\Users\\Armageddon\\.nuget\\packages\\",
       "outputPath": "E:\\Repositories\\SDK\\Adapters\\Logger\\obj\\",

@@ -7,6 +7,9 @@
     <Version>1.0.0</Version>
     <Authors>OdysseyAnalytics</Authors>
     <Description>Core analytics SDK with clean architecture separation</Description>
+    <PackageProjectUrl>https://github.com/Odyssey-analytic/SDK</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Odyssey-analytic/SDK</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
