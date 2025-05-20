@@ -1,0 +1,74 @@
+name: Build, Version Bump, and Publish to GitHub Packages
+
+on:
+  push:
+    branches:
+      - build
+
+jobs:
+  build-pack-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧾 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🛠️ Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: 📦 Restore dependencies
+        run: dotnet restore OdysseyAnalytics.sln
+
+      - name: 🏗️ Build all projects (Release)
+        run: dotnet build OdysseyAnalytics.sln --configuration Release --no-restore
+
+      - name: 🔢 Auto bump versions for changed projects
+        run: |
+          bump_version() {
+            file=$1
+            if git diff --name-only $GITHUB_SHA $(git merge-base origin/build HEAD) | grep -q "$file"; then
+              echo "🔍 Changes detected in $file"
+              old_version=$(grep '<Version>' $file | sed -E 's/.*<Version>(.*)<\/Version>.*/\1/')
+              major=$(echo $old_version | cut -d. -f1)
+              minor=$(echo $old_version | cut -d. -f2)
+              patch=$(echo $old_version | cut -d. -f3)
+              new_version="$major.$minor.$((patch+1))"
+              echo "⬆️ Bumping version: $old_version → $new_version"
+              sed -i "s|<Version>.*</Version>|<Version>$new_version</Version>|g" "$file"
+            else
+              echo "✅ No changes in $file"
+            fi
+          }
+
+          bump_version Core/odysseyAnalytics.Core.csproj
+          bump_version Adapters/Logger/odysseyAnalytics.Adapters.Logger.csproj
+          bump_version Adapters/REST/odysseyAnalytics.Adapters.REST.csproj
+          bump_version Adapters/RabbitMQ/OdysseyAnalytics.Adapter.RabbitMQ.csproj
+          bump_version Adapters/Sqlite/odysseyAnalytics.Adapters.Sqlite.csproj
+
+      - name: 🚀 Commit version changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add Core/*.csproj Adapters/*/*.csproj
+          git diff --cached --quiet || git commit -m "🔖 Auto-bump version for modified projects"
+          git push
+
+      - name: 📦 Pack all projects
+        run: |
+          dotnet pack Core/odysseyAnalytics.Core.csproj -c Release -o ./nupkgs
+          dotnet pack Adapters/Logger/odysseyAnalytics.Adapters.Logger.csproj -c Release -o ./nupkgs
+          dotnet pack Adapters/REST/odysseyAnalytics.Adapters.REST.csproj -c Release -o ./nupkgs
+          dotnet pack Adapters/RabbitMQ/OdysseyAnalytics.Adapter.RabbitMQ.csproj -c Release -o ./nupkgs
+          dotnet pack Adapters/Sqlite/odysseyAnalytics.Adapters.Sqlite.csproj -c Release -o ./nupkgs
+
+      - name: 🚀 Publish to GitHub Packages
+        run: |
+          for file in ./nupkgs/*.nupkg
+          do
+            dotnet nuget push "$file" \
+              --api-key ${{ secrets.GITHUB_TOKEN }} \
+              --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+          done
