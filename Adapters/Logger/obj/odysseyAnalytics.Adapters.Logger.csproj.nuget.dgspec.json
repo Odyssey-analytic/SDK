@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\codes\\Software\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj": {}
+    "E:\\Repositories\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj": {}
   },
   "projects": {
-    "E:\\codes\\Software\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj": {
+    "E:\\Repositories\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\codes\\Software\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj",
+        "projectUniqueName": "E:\\Repositories\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj",
         "projectName": "odysseyAnalytics.Adapters.Logger",
-        "projectPath": "E:\\codes\\Software\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "E:\\codes\\Software\\SDK\\Adapters\\Logger\\obj\\",
+        "projectPath": "E:\\Repositories\\SDK\\Adapters\\Logger\\odysseyAnalytics.Adapters.Logger.csproj",
+        "packagesPath": "C:\\Users\\Armageddon\\.nuget\\packages\\",
+        "outputPath": "E:\\Repositories\\SDK\\Adapters\\Logger\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Armageddon\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -26,8 +26,8 @@
           "netstandard2.0": {
             "targetAlias": "netstandard2.0",
             "projectReferences": {
-              "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
-                "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj"
+              "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
+                "projectPath": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj"
               }
             }
           }
@@ -70,17 +70,17 @@
         }
       }
     },
-    "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
+    "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj",
+        "projectUniqueName": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj",
         "projectName": "odysseyAnalytics.Core",
-        "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "E:\\codes\\Software\\SDK\\Core\\obj\\",
+        "projectPath": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj",
+        "packagesPath": "C:\\Users\\Armageddon\\.nuget\\packages\\",
+        "outputPath": "E:\\Repositories\\SDK\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Armageddon\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"

@@ -1,0 +1,14 @@
+E:\Repositories\SDK\Adapters\Sqlite\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.deps.json
+E:\Repositories\SDK\Adapters\Sqlite\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.dll
+E:\Repositories\SDK\Adapters\Sqlite\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.pdb
+E:\Repositories\SDK\Adapters\Sqlite\bin\Debug\netstandard2.0\odysseyAnalytics.Core.dll
+E:\Repositories\SDK\Adapters\Sqlite\bin\Debug\netstandard2.0\odysseyAnalytics.Core.pdb
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.csproj.AssemblyReference.cache
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.GeneratedMSBuildEditorConfig.editorconfig
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.AssemblyInfoInputs.cache
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.AssemblyInfo.cs
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.csproj.CoreCompileInputs.cache
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.sourcelink.json
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyA.9DE92974.Up2Date
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.dll
+E:\Repositories\SDK\Adapters\Sqlite\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Sqlite.pdb

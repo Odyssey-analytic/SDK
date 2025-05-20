@@ -1,0 +1,14 @@
+E:\Repositories\SDK\Adapters\REST\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.deps.json
+E:\Repositories\SDK\Adapters\REST\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.dll
+E:\Repositories\SDK\Adapters\REST\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.pdb
+E:\Repositories\SDK\Adapters\REST\bin\Debug\netstandard2.0\odysseyAnalytics.Core.dll
+E:\Repositories\SDK\Adapters\REST\bin\Debug\netstandard2.0\odysseyAnalytics.Core.pdb
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.csproj.AssemblyReference.cache
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.GeneratedMSBuildEditorConfig.editorconfig
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.AssemblyInfoInputs.cache
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.AssemblyInfo.cs
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.csproj.CoreCompileInputs.cache
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.sourcelink.json
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyA.90355D0F.Up2Date
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.dll
+E:\Repositories\SDK\Adapters\REST\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.REST.pdb
