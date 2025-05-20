@@ -1,0 +1,14 @@
+E:\Repositories\SDK\Adapters\RabbitMQ\bin\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.deps.json
+E:\Repositories\SDK\Adapters\RabbitMQ\bin\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.dll
+E:\Repositories\SDK\Adapters\RabbitMQ\bin\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.pdb
+E:\Repositories\SDK\Adapters\RabbitMQ\bin\Debug\netstandard2.0\odysseyAnalytics.Core.dll
+E:\Repositories\SDK\Adapters\RabbitMQ\bin\Debug\netstandard2.0\odysseyAnalytics.Core.pdb
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.csproj.AssemblyReference.cache
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.GeneratedMSBuildEditorConfig.editorconfig
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.AssemblyInfoInputs.cache
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.AssemblyInfo.cs
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.csproj.CoreCompileInputs.cache
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.sourcelink.json
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyA.563585F2.Up2Date
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.dll
+E:\Repositories\SDK\Adapters\RabbitMQ\obj\Debug\netstandard2.0\odysseyAnalytics.Adapter.RabbitMQ.pdb

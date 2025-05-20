@@ -1,0 +1,11 @@
+E:\Repositories\SDK\Core\bin\Release\netstandard2.0\OdysseyAnalytics.Core.deps.json
+E:\Repositories\SDK\Core\bin\Release\netstandard2.0\OdysseyAnalytics.Core.dll
+E:\Repositories\SDK\Core\bin\Release\netstandard2.0\OdysseyAnalytics.Core.pdb
+E:\Repositories\SDK\Core\obj\Release\netstandard2.0\OdysseyAnalytics.Core.csproj.AssemblyReference.cache
+E:\Repositories\SDK\Core\obj\Release\netstandard2.0\OdysseyAnalytics.Core.GeneratedMSBuildEditorConfig.editorconfig
+E:\Repositories\SDK\Core\obj\Release\netstandard2.0\OdysseyAnalytics.Core.AssemblyInfoInputs.cache
+E:\Repositories\SDK\Core\obj\Release\netstandard2.0\OdysseyAnalytics.Core.AssemblyInfo.cs
+E:\Repositories\SDK\Core\obj\Release\netstandard2.0\OdysseyAnalytics.Core.csproj.CoreCompileInputs.cache
+E:\Repositories\SDK\Core\obj\Release\netstandard2.0\OdysseyAnalytics.Core.sourcelink.json
+E:\Repositories\SDK\Core\obj\Release\netstandard2.0\OdysseyAnalytics.Core.dll
+E:\Repositories\SDK\Core\obj\Release\netstandard2.0\OdysseyAnalytics.Core.pdb

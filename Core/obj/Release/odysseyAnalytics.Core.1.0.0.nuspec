@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>odysseyAnalytics.Core</id>
+    <version>1.0.0</version>
+    <authors>OdysseyAnalytics</authors>
+    <description>Core analytics SDK with clean architecture separation</description>
+    <repository type="git" commit="25fdc5d73be10df5b3025f135f148f9ed1de6c4d" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Newtonsoft.Json" version="13.0.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="E:\Repositories\SDK\Core\bin\Release\netstandard2.0\OdysseyAnalytics.Core.dll" target="lib\netstandard2.0\OdysseyAnalytics.Core.dll" />
+  </files>
+</package>

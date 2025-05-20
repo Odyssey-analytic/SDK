@@ -1,0 +1,14 @@
+E:\Repositories\SDK\Adapters\Logger\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.deps.json
+E:\Repositories\SDK\Adapters\Logger\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.dll
+E:\Repositories\SDK\Adapters\Logger\bin\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.pdb
+E:\Repositories\SDK\Adapters\Logger\bin\Debug\netstandard2.0\odysseyAnalytics.Core.dll
+E:\Repositories\SDK\Adapters\Logger\bin\Debug\netstandard2.0\odysseyAnalytics.Core.pdb
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.csproj.AssemblyReference.cache
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.GeneratedMSBuildEditorConfig.editorconfig
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.AssemblyInfoInputs.cache
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.AssemblyInfo.cs
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.csproj.CoreCompileInputs.cache
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.sourcelink.json
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyA.019C2D02.Up2Date
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.dll
+E:\Repositories\SDK\Adapters\Logger\obj\Debug\netstandard2.0\odysseyAnalytics.Adapters.Logger.pdb
