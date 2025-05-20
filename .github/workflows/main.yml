@@ -1,4 +1,4 @@
-  name: Build, Version Bump, and Publish to GitHub Packages
+name: Build, Version Bump, and Publish to GitHub Packages
 
 on:
   push:
