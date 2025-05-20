@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y4LBZPaNY1Q=",
+  "dgSpecHash": "zn/owIJgwos=",
   "success": true,
-  "projectFilePath": "E:\\codes\\Software\\SDK\\Adapters\\Rest\\OdysseyAnalytics.RestAdapter.csproj",
+  "projectFilePath": "E:\\codes\\Software\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",

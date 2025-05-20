@@ -1,5 +1,5 @@
 is_global = true
-build_property.RootNamespace = OdysseyAnalytics.Core
+build_property.RootNamespace = odysseyAnalytics.Core
 build_property.ProjectDir = E:\codes\Software\SDK\Core\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

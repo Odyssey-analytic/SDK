@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>OdysseyAnalytics.RESTAdapter</RootNamespace>
+    <RootNamespace>odysseyAnalytics.Adapters.REST</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\OdysseyAnalytics.Core.csproj" />
+    <ProjectReference Include="..\..\Core\odysseyAnalytics.Core.csproj" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

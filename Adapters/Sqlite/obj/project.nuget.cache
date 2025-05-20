@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UxpEmb3kJHA=",
+  "dgSpecHash": "AssS/Wqpmfw=",
   "success": true,
-  "projectFilePath": "E:\\codes\\Software\\SDK\\Adapters\\Sqlite\\OdysseyAnalytics.Adapter.Sqlite.csproj",
+  "projectFilePath": "E:\\codes\\Software\\SDK\\Adapters\\Sqlite\\odysseyAnalytics.Adapters.Sqlite.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.data.sqlite\\3.1.32\\microsoft.data.sqlite.3.1.32.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.data.sqlite.core\\3.1.32\\microsoft.data.sqlite.core.3.1.32.nupkg.sha512",

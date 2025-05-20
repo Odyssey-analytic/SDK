@@ -329,17 +329,17 @@
           }
         }
       },
-      "OdysseyAnalytics.Core/1.0.0": {
+      "odysseyAnalytics.Core/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3"
         },
         "compile": {
-          "bin/placeholder/OdysseyAnalytics.Core.dll": {}
+          "bin/placeholder/odysseyAnalytics.Core.dll": {}
         },
         "runtime": {
-          "bin/placeholder/OdysseyAnalytics.Core.dll": {}
+          "bin/placeholder/odysseyAnalytics.Core.dll": {}
         }
       }
     }
@@ -827,18 +827,18 @@
         "version.txt"
       ]
     },
-    "OdysseyAnalytics.Core/1.0.0": {
+    "odysseyAnalytics.Core/1.0.0": {
       "type": "project",
-      "path": "../../Core/OdysseyAnalytics.Core.csproj",
-      "msbuildProject": "../../Core/OdysseyAnalytics.Core.csproj"
+      "path": "../../Core/odysseyAnalytics.Core.csproj",
+      "msbuildProject": "../../Core/odysseyAnalytics.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "Microsoft.Data.Sqlite >= 3.1.32",
       "NETStandard.Library >= 2.0.3",
-      "OdysseyAnalytics.Core >= 1.0.0",
       "System.Data.SQLite >= 1.0.119",
+      "odysseyAnalytics.Core >= 1.0.0",
       "sqlite-net-pcl >= 1.9.172"
     ]
   },
@@ -848,9 +848,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\codes\\Software\\SDK\\Adapters\\Sqlite\\OdysseyAnalytics.Adapter.Sqlite.csproj",
-      "projectName": "OdysseyAnalytics.Adapter.Sqlite",
-      "projectPath": "E:\\codes\\Software\\SDK\\Adapters\\Sqlite\\OdysseyAnalytics.Adapter.Sqlite.csproj",
+      "projectUniqueName": "E:\\codes\\Software\\SDK\\Adapters\\Sqlite\\odysseyAnalytics.Adapters.Sqlite.csproj",
+      "projectName": "odysseyAnalytics.Adapters.Sqlite",
+      "projectPath": "E:\\codes\\Software\\SDK\\Adapters\\Sqlite\\odysseyAnalytics.Adapters.Sqlite.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
       "outputPath": "E:\\codes\\Software\\SDK\\Adapters\\Sqlite\\obj\\",
       "projectStyle": "PackageReference",
@@ -867,8 +867,8 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj": {
-              "projectPath": "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj"
+            "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
+              "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj"
             }
           }
         }

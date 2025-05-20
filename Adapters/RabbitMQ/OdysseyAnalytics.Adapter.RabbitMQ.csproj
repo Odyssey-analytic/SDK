@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\OdysseyAnalytics.Core.csproj" />
+    <ProjectReference Include="..\..\Core\odysseyAnalytics.Core.csproj" />
     <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
   </ItemGroup>
 

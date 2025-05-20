@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\OdysseyAnalytics.Adapter.RabbitMQ.csproj": {}
+    "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\odysseyAnalytics.Adapter.RabbitMQ.csproj": {}
   },
   "projects": {
-    "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\OdysseyAnalytics.Adapter.RabbitMQ.csproj": {
+    "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\odysseyAnalytics.Adapter.RabbitMQ.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\OdysseyAnalytics.Adapter.RabbitMQ.csproj",
-        "projectName": "OdysseyAnalytics.Adapter.RabbitMQ",
-        "projectPath": "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\OdysseyAnalytics.Adapter.RabbitMQ.csproj",
+        "projectUniqueName": "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\odysseyAnalytics.Adapter.RabbitMQ.csproj",
+        "projectName": "odysseyAnalytics.Adapter.RabbitMQ",
+        "projectPath": "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\odysseyAnalytics.Adapter.RabbitMQ.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
         "outputPath": "E:\\codes\\Software\\SDK\\Adapters\\RabbitMQ\\obj\\",
         "projectStyle": "PackageReference",
@@ -26,8 +26,8 @@
           "netstandard2.0": {
             "targetAlias": "netstandard2.0",
             "projectReferences": {
-              "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj": {
-                "projectPath": "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj"
+              "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
+                "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj"
               }
             }
           }
@@ -74,12 +74,12 @@
         }
       }
     },
-    "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj": {
+    "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj",
-        "projectName": "OdysseyAnalytics.Core",
-        "projectPath": "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj",
+        "projectUniqueName": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj",
+        "projectName": "odysseyAnalytics.Core",
+        "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
         "outputPath": "E:\\codes\\Software\\SDK\\Core\\obj\\",
         "projectStyle": "PackageReference",

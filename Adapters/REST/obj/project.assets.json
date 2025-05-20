@@ -39,17 +39,17 @@
           }
         }
       },
-      "OdysseyAnalytics.Core/1.0.0": {
+      "odysseyAnalytics.Core/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3"
         },
         "compile": {
-          "bin/placeholder/OdysseyAnalytics.Core.dll": {}
+          "bin/placeholder/odysseyAnalytics.Core.dll": {}
         },
         "runtime": {
-          "bin/placeholder/OdysseyAnalytics.Core.dll": {}
+          "bin/placeholder/odysseyAnalytics.Core.dll": {}
         }
       }
     }
@@ -229,17 +229,17 @@
         "packageIcon.png"
       ]
     },
-    "OdysseyAnalytics.Core/1.0.0": {
+    "odysseyAnalytics.Core/1.0.0": {
       "type": "project",
-      "path": "../../Core/OdysseyAnalytics.Core.csproj",
-      "msbuildProject": "../../Core/OdysseyAnalytics.Core.csproj"
+      "path": "../../Core/odysseyAnalytics.Core.csproj",
+      "msbuildProject": "../../Core/odysseyAnalytics.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 13.0.3",
-      "OdysseyAnalytics.Core >= 1.0.0"
+      "odysseyAnalytics.Core >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -248,11 +248,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\codes\\Software\\SDK\\Adapters\\Rest\\OdysseyAnalytics.RestAdapter.csproj",
-      "projectName": "OdysseyAnalytics.RestAdapter",
-      "projectPath": "E:\\codes\\Software\\SDK\\Adapters\\Rest\\OdysseyAnalytics.RestAdapter.csproj",
+      "projectUniqueName": "E:\\codes\\Software\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
+      "projectName": "odysseyAnalytics.Adapters.REST",
+      "projectPath": "E:\\codes\\Software\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "E:\\codes\\Software\\SDK\\Adapters\\Rest\\obj\\",
+      "outputPath": "E:\\codes\\Software\\SDK\\Adapters\\REST\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -267,8 +267,8 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj": {
-              "projectPath": "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj"
+            "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
+              "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj"
             }
           }
         }

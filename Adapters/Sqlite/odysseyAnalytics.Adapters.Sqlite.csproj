@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\OdysseyAnalytics.Core.csproj" />
+    <ProjectReference Include="..\..\Core\odysseyAnalytics.Core.csproj" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.32" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.119" />

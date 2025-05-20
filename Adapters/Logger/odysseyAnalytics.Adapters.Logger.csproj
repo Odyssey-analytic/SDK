@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>OdysseyAnalytics.LoggerAdapter</RootNamespace>
+    <RootNamespace>odysseyAnalytics.Adapters.Logger</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\OdysseyAnalytics.Core.csproj" />
+    <ProjectReference Include="..\..\Core\odysseyAnalytics.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj": {}
+    "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {}
   },
   "projects": {
-    "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj": {
+    "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj",
-        "projectName": "OdysseyAnalytics.Core",
-        "projectPath": "E:\\codes\\Software\\SDK\\Core\\OdysseyAnalytics.Core.csproj",
+        "projectUniqueName": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj",
+        "projectName": "odysseyAnalytics.Core",
+        "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
         "outputPath": "E:\\codes\\Software\\SDK\\Core\\obj\\",
         "projectStyle": "PackageReference",

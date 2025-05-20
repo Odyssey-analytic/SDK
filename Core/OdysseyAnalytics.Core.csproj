@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>OdysseyAnalytics.Core</PackageId>
+    <PackageId>odysseyAnalytics.Core</PackageId>
     <Version>1.0.0</Version>
     <Authors>OdysseyAnalytics</Authors>
     <Description>Core analytics SDK with clean architecture separation</Description>
