@@ -46,7 +46,7 @@ jobs:
           bump_version Core/odysseyAnalytics.Core.csproj
           bump_version Adapters/Logger/odysseyAnalytics.Adapters.Logger.csproj
           bump_version Adapters/REST/odysseyAnalytics.Adapters.REST.csproj
-          bump_version Adapters/RabbitMQ/OdysseyAnalytics.Adapter.RabbitMQ.csproj
+          bump_version Adapters/RabbitMQ/odysseyAnalytics.Adapter.RabbitMQ.csproj
           bump_version Adapters/Sqlite/odysseyAnalytics.Adapters.Sqlite.csproj
 
       - name: 🚀 Commit version changes
