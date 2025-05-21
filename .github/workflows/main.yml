@@ -17,12 +17,12 @@ jobs:
       - name: 🧾 Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🛠️ Setup .NET SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: |
-            6.0.x
-            8.0.x
+      # - name: 🛠️ Setup .NET SDK
+      #   uses: actions/setup-dotnet@v3
+      #   with:
+      #     dotnet-version: |
+      #       6.0.x
+      #       8.0.x
             
       - name: 📦 Restore dependencies
         run: dotnet restore OdysseyAnalytics.sln
@@ -73,10 +73,10 @@ jobs:
 
       - name: 🚀 Publish to GitHub Packages
         run: |
-            $ErrorActionPreference = "Stop"
-            $source = "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-            Get-ChildItem -Path ./nupkgs -Filter *.nupkg | ForEach-Object {
-              dotnet nuget push $_.FullName `
-                --api-key $env:GITHUB_TOKEN `
-                --source $source
-            }
+          $ErrorActionPreference = "Stop"
+          $source = "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+          Get-ChildItem -Path ./nupkgs -Filter *.nupkg | ForEach-Object {
+            $file = $_.FullName
+            Write-Host "Pushing $file to $source"
+            dotnet nuget push "$file" --api-key "$env:GITHUB_TOKEN" --source "$source"
+          }
