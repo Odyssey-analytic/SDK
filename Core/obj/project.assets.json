@@ -224,19 +224,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Armageddon\\.nuget\\packages\\": {}
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj",
+      "projectUniqueName": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj",
       "projectName": "odysseyAnalytics.Core",
-      "projectPath": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj",
-      "packagesPath": "C:\\Users\\Armageddon\\.nuget\\packages\\",
-      "outputPath": "E:\\Repositories\\SDK\\Core\\obj\\",
+      "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "E:\\codes\\Software\\SDK\\Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Armageddon\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"

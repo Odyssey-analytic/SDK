@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = odysseyAnalytics.Adapter.RabbitMQ
-build_property.ProjectDir = E:\Repositories\SDK\Adapters\RabbitMQ\
+build_property.ProjectDir = E:\codes\Software\SDK\Adapters\RabbitMQ\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

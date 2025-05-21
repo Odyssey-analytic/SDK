@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("RabbitMQ adapter for OdysseyAnalytics")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+794ad9b924664de57e4d457132f6505f2b596195")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b30cdf96df058dd3938de61c6f240ae24db1abc7")]
 [assembly: System.Reflection.AssemblyProductAttribute("odysseyAnalytics.Adapter.RabbitMQ")]
 [assembly: System.Reflection.AssemblyTitleAttribute("odysseyAnalytics.Adapter.RabbitMQ")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
