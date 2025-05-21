@@ -29,8 +29,10 @@ jobs:
         run: |
           bump_version() {
             file=$1
-            if git diff --name-only $GITHUB_SHA $(git merge-base origin/build HEAD) | grep -q "$file"; then
-              echo "🔍 Changes detected in $file"
+            project_dir=$(dirname "$file")
+          
+            if git diff --name-only $GITHUB_SHA $(git merge-base origin/build HEAD) | grep -q "^$project_dir/"; then
+              echo "🔍 Changes detected in $project_dir"
               old_version=$(grep '<Version>' "$file" | sed -E 's/.*<Version>(.*)<\/Version>.*/\1/')
               major=$(echo $old_version | cut -d. -f1)
               minor=$(echo $old_version | cut -d. -f2)
@@ -39,7 +41,7 @@ jobs:
               echo "⬆️ Bumping version: $old_version → $new_version"
               powershell -Command "(Get-Content '$file') -replace '<Version>.*</Version>', '<Version>$new_version</Version>' | Set-Content '$file'"
             else
-              echo "✅ No changes in $file"
+              echo "✅ No changes in $project_dir"
             fi
           }
 
