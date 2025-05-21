@@ -73,9 +73,10 @@ jobs:
 
       - name: 🚀 Publish to GitHub Packages
         run: |
-          $ErrorActionPreference = "Stop"
-          Get-ChildItem -Path ./nupkgs -Filter *.nupkg | ForEach-Object {
-            dotnet nuget push $_.FullName `
-              --api-key $env:GITHUB_TOKEN `
-              --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-          }
+            $ErrorActionPreference = "Stop"
+            $source = "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+            Get-ChildItem -Path ./nupkgs -Filter *.nupkg | ForEach-Object {
+              dotnet nuget push $_.FullName `
+                --api-key $env:GITHUB_TOKEN `
+                --source $source
+            }
