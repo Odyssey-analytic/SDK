@@ -17,13 +17,6 @@ jobs:
     steps:
       - name: 🧾 Checkout repository
         uses: actions/checkout@v3
-
-      # - name: 🛠️ Setup .NET SDK
-      #   uses: actions/setup-dotnet@v3
-      #   with:
-      #     dotnet-version: |
-      #       6.0.x
-      #       8.0.x
             
       - name: 📦 Restore dependencies
         run: dotnet restore OdysseyAnalytics.sln
@@ -77,7 +70,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         run: |
-          echo "$env:GITHUB_TOKEN"
           $ErrorActionPreference = "Stop"
           $source = "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
           Get-ChildItem -Path ./nupkgs -Filter *.nupkg | ForEach-Object {
