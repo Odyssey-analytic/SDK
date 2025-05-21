@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   build-pack-publish:
@@ -72,7 +73,11 @@ jobs:
           dotnet pack Adapters/Sqlite/odysseyAnalytics.Adapters.Sqlite.csproj -c Release -o ./nupkgs
 
       - name: 🚀 Publish to GitHub Packages
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         run: |
+          echo "$env:GITHUB_TOKEN"
           $ErrorActionPreference = "Stop"
           $source = "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
           Get-ChildItem -Path ./nupkgs -Filter *.nupkg | ForEach-Object {
@@ -80,3 +85,4 @@ jobs:
             Write-Host "Pushing $file to $source"
             dotnet nuget push "$file" --api-key "$env:GITHUB_TOKEN" --source "$source"
           }
+
