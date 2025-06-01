@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = odysseyAnalytics.Adapters.Sqlite
-build_property.ProjectDir = E:\codes\Software\SDK\Adapters\Sqlite\
+build_property.ProjectDir = E:\Repositories\SDK\Adapters\Sqlite\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

@@ -243,19 +243,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ASUS\\.nuget\\packages\\": {}
+    "C:\\Users\\Armageddon\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\codes\\Software\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
+      "projectUniqueName": "E:\\Repositories\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
       "projectName": "odysseyAnalytics.Adapter.REST",
-      "projectPath": "E:\\codes\\Software\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
-      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "E:\\codes\\Software\\SDK\\Adapters\\REST\\obj\\",
+      "projectPath": "E:\\Repositories\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
+      "packagesPath": "C:\\Users\\Armageddon\\.nuget\\packages\\",
+      "outputPath": "E:\\Repositories\\SDK\\Adapters\\REST\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Armageddon\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
@@ -267,8 +267,8 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
-              "projectPath": "E:\\codes\\Software\\SDK\\Core\\odysseyAnalytics.Core.csproj"
+            "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
+              "projectPath": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj"
             }
           }
         }

@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = odysseyAnalytics.Adapters.REST
-build_property.ProjectDir = E:\codes\Software\SDK\Adapters\REST\
+build_property.ProjectDir = E:\Repositories\SDK\Adapters\REST\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false
