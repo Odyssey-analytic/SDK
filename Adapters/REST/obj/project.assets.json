@@ -39,7 +39,7 @@
           }
         }
       },
-      "odysseyAnalytics.Core/1.0.0": {
+      "odysseyAnalytics.Core/1.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -229,7 +229,7 @@
         "packageIcon.png"
       ]
     },
-    "odysseyAnalytics.Core/1.0.0": {
+    "odysseyAnalytics.Core/1.0.2": {
       "type": "project",
       "path": "../../Core/odysseyAnalytics.Core.csproj",
       "msbuildProject": "../../Core/odysseyAnalytics.Core.csproj"
@@ -239,14 +239,14 @@
     ".NETStandard,Version=v2.0": [
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 13.0.3",
-      "odysseyAnalytics.Core >= 1.0.0"
+      "odysseyAnalytics.Core >= 1.0.2"
     ]
   },
   "packageFolders": {
     "C:\\Users\\Armageddon\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.2",
     "restore": {
       "projectUniqueName": "E:\\Repositories\\SDK\\Adapters\\REST\\odysseyAnalytics.Adapters.REST.csproj",
       "projectName": "odysseyAnalytics.Adapter.REST",

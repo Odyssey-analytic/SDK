@@ -5,7 +5,7 @@
   },
   "projects": {
     "E:\\Repositories\\SDK\\Adapters\\Sqlite\\odysseyAnalytics.Adapters.Sqlite.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.2",
       "restore": {
         "projectUniqueName": "E:\\Repositories\\SDK\\Adapters\\Sqlite\\odysseyAnalytics.Adapters.Sqlite.csproj",
         "projectName": "odysseyAnalytics.Adapter.Sqlite",
@@ -83,7 +83,7 @@
       }
     },
     "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.2",
       "restore": {
         "projectUniqueName": "E:\\Repositories\\SDK\\Core\\odysseyAnalytics.Core.csproj",
         "projectName": "odysseyAnalytics.Core",
