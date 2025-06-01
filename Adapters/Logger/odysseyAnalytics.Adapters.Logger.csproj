@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>odysseyAnalytics.Adapters.Logger</RootNamespace>
     <PackageId>odysseyAnalytics.Adapter.Logger</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>OdysseyAnalytics</Authors>
     <Description>Logger adapter for OdysseyAnalytics</Description>
     <PackageProjectUrl>https://github.com/Odyssey-analytic/SDK</PackageProjectUrl>
