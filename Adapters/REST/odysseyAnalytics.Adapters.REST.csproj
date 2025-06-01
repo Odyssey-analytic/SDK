@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>odysseyAnalytics.Adapters.REST</RootNamespace>
     <PackageId>odysseyAnalytics.Adapter.REST</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>OdysseyAnalytics</Authors>
     <Description>REST adapter for OdysseyAnalytics</Description>
     <PackageProjectUrl>https://github.com/Odyssey-analytic/SDK</PackageProjectUrl>
