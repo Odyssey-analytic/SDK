@@ -258,8 +258,6 @@ namespace odysseyAnalytics.Core.Application.Session
                     //     SessionId.ToString(), CID.ToString(), 0, platform);
                     var evt = new BusinessEvent(GetQueueName("business_event"), DateTime.Now, SessionId.ToString(),
                         CID.ToString(), 0,-1,cartType, itemType, itemId, amount, currency);
-                    cacheHandler.SaveEvent(evt);
-                    logger.Log("Saved event in DB");
                     await messagePublisher.PublishMessage(evt);
                     #endregion
                 }
@@ -314,9 +312,6 @@ namespace odysseyAnalytics.Core.Application.Session
                     #region MUSTBEDEBUGGED
                     var evt = new ErrorEvent(GetQueueName("error_event"), DateTime.Now, SessionId.ToString(),
                         CID.ToString(), 0,-1,severityLevel, message);
-                    cacheHandler.SaveEvent(evt);
-                    logger.Log("Saved event in DB");
-                    logger.Log("Saved event in DB");
                     await messagePublisher.PublishMessage(evt);
                     #endregion
                 }
@@ -374,8 +369,6 @@ namespace odysseyAnalytics.Core.Application.Session
                     //     SessionId.ToString(), CID.ToString(), 0, platform);
                     var evt = new ProgressionEvent(GetQueueName("progression_event"), DateTime.Now, SessionId.ToString(),
                         CID.ToString(), 0,-1,progressionStatus, progression01, progression02, progression03, value);
-                    cacheHandler.SaveEvent(evt);
-                    logger.Log("Saved event in DB");
                     await messagePublisher.PublishMessage(evt);
                     #endregion
                 }
@@ -433,8 +426,6 @@ namespace odysseyAnalytics.Core.Application.Session
                     //     SessionId.ToString(), CID.ToString(), 0, platform);
                     var evt = new QualityEvent(fps,memoryUsage,GetQueueName("quality_event"), DateTime.Now, SessionId.ToString(),
                         CID.ToString(), 0,-1);
-                    cacheHandler.SaveEvent(evt);
-                    logger.Log("Saved event in DB");
                     await messagePublisher.PublishMessage(evt);
                     #endregion
                 }
@@ -492,8 +483,6 @@ namespace odysseyAnalytics.Core.Application.Session
                     //     SessionId.ToString(), CID.ToString(), 0, platform);
                     var evt = new ResourceEvent(flowType,itemType,itemId,amount,resourceCurrency,GetQueueName("resource_event"), DateTime.Now, SessionId.ToString(),
                         CID.ToString(), 0,-1);
-                    cacheHandler.SaveEvent(evt);
-                    logger.Log("Saved event in DB");
                     await messagePublisher.PublishMessage(evt);
                     #endregion
                 }
