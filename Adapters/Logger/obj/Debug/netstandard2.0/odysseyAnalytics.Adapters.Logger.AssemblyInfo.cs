@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Logger adapter for OdysseyAnalytics")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d62294405aba42d452fe1fcd7cfdeac1d0f3833")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ebe895a26e490c800b3876128f803f410318a0fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("odysseyAnalytics.Adapters.Logger")]
 [assembly: System.Reflection.AssemblyTitleAttribute("odysseyAnalytics.Adapters.Logger")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

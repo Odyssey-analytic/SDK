@@ -630,6 +630,11 @@ namespace odysseyAnalytics.Core.Application.Session
         {
             if (!queues.TryGetValue(queueKey, out string queueName))
             {
+                foreach (var queue in queues)
+                {
+                    logger.Log($"_____________________key: {queue.Key}, value: {queue.Value}");
+                }
+                
                 logger.Error(null, new QueueNotFoundException(queueKey));
             }
 
