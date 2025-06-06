@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("REST adapter for OdysseyAnalytics")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ebe895a26e490c800b3876128f803f410318a0fb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26bf918daa097c28a5b07fc7a04d8142932fe0f4")]
 [assembly: System.Reflection.AssemblyProductAttribute("odysseyAnalytics.Adapters.REST")]
 [assembly: System.Reflection.AssemblyTitleAttribute("odysseyAnalytics.Adapters.REST")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
