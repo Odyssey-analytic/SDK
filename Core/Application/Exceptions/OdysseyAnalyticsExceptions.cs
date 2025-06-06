@@ -119,7 +119,7 @@ namespace odysseyAnalytics.Core.Application.Exceptions
     }
 
     /// <summary>
-    /// Thrown when progression event depth exceeds MAX_DEPTH
+    /// Thrown when custom event depth exceeds MAX_DEPTH
     /// </summary>
     public class DepthLimitExceeded : OdysseyAnalyticsException
     {
