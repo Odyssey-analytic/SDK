@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>odysseyAnalytics.Adapters.Bootstrap</RootNamespace>
+    <PackageId>odysseyAnalytics.Adapter.Bootstrap</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>OdysseyAnalytics</Authors>
+    <Description>Bootstrapper OdysseyAnalytics</Description>
+    <PackageProjectUrl>https://github.com/Odyssey-analytic/SDK</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Odyssey-analytic/SDK</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\odysseyAnalytics.Core.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.32" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+	<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
+  </ItemGroup>
+
+</Project>

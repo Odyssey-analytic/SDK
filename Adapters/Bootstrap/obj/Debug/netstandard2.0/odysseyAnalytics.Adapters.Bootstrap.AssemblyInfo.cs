@@ -12,11 +12,11 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("OdysseyAnalytics")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyDescriptionAttribute("Sqlite adapter for OdysseyAnalytics")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("Bootstrapper OdysseyAnalytics")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f8e7119780ed6a5d54f5c620a889a854556f9dd6")]
-[assembly: System.Reflection.AssemblyProductAttribute("odysseyAnalytics.Adapters.Sqlite")]
-[assembly: System.Reflection.AssemblyTitleAttribute("odysseyAnalytics.Adapters.Sqlite")]
+[assembly: System.Reflection.AssemblyProductAttribute("odysseyAnalytics.Adapters.Bootstrap")]
+[assembly: System.Reflection.AssemblyTitleAttribute("odysseyAnalytics.Adapters.Bootstrap")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://github.com/Odyssey-analytic/SDK")]
 
