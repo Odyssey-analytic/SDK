@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Sqlite adapter for OdysseyAnalytics")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26bf918daa097c28a5b07fc7a04d8142932fe0f4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9abc4ec75e85947999fbd2b12093652795a5cc66")]
 [assembly: System.Reflection.AssemblyProductAttribute("odysseyAnalytics.Adapters.Sqlite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("odysseyAnalytics.Adapters.Sqlite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
