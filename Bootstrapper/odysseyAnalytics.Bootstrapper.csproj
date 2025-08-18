@@ -3,6 +3,14 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RootNamespace>Bootstrapper</RootNamespace>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>odysseyAnalytics.Bootstrapper</PackageId>
+		<Version>1.0.5</Version>
+		<Authors>OdysseyAnalytics</Authors>
+		<Description>Bootstrapper from Odyssey Analaytics SDK Group</Description>
+		<PackageProjectUrl>https://github.com/Odyssey-analytic/SDK</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Odyssey-analytic/SDK</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
     </PropertyGroup>
 	
 	<ItemGroup>
