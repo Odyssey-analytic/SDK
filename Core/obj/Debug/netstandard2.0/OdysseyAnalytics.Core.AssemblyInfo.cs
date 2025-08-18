@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Core analytics SDK with clean architecture separation")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9abc4ec75e85947999fbd2b12093652795a5cc66")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f8e7119780ed6a5d54f5c620a889a854556f9dd6")]
 [assembly: System.Reflection.AssemblyProductAttribute("odysseyAnalytics.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("odysseyAnalytics.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -48,6 +48,7 @@ jobs:
           bump_version Adapters/REST/odysseyAnalytics.Adapters.REST.csproj
           bump_version Adapters/RabbitMQ/odysseyAnalytics.Adapter.RabbitMQ.csproj
           bump_version Adapters/Sqlite/odysseyAnalytics.Adapters.Sqlite.csproj
+          bump_version Bootstrapper/odysseyAnalytics.Bootstrapper.csproj
 
       - name: 🚀 Commit version changes
         run: |
@@ -64,6 +65,7 @@ jobs:
           dotnet pack Adapters/REST/odysseyAnalytics.Adapters.REST.csproj -c Release -o ./nupkgs
           dotnet pack Adapters/RabbitMQ/OdysseyAnalytics.Adapter.RabbitMQ.csproj -c Release -o ./nupkgs
           dotnet pack Adapters/Sqlite/odysseyAnalytics.Adapters.Sqlite.csproj -c Release -o ./nupkgs
+          dotnet pack Bootstrapper/odysseyAnalytics.Bootstrapper.csproj -c Release -o ./nupkgs
 
       - name: 🚀 Publish to GitHub Packages
         shell: pwsh

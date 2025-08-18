@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>Bootstrapper</RootNamespace>
+    </PropertyGroup>
+	
+	<ItemGroup>
+      <ProjectReference Include="..\Adapters\Logger\odysseyAnalytics.Adapters.Logger.csproj" />
+      <ProjectReference Include="..\Adapters\RabbitMQ\odysseyAnalytics.Adapter.RabbitMQ.csproj" />
+      <ProjectReference Include="..\Adapters\REST\odysseyAnalytics.Adapters.REST.csproj" />
+      <ProjectReference Include="..\Adapters\Sqlite\odysseyAnalytics.Adapters.Sqlite.csproj" />
+      <ProjectReference Include="..\Core\odysseyAnalytics.Core.csproj" />
+    </ItemGroup>
+	
+</Project>
